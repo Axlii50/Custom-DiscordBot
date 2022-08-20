@@ -38,13 +38,6 @@ namespace DCBotApi
             return null;
         }
 
-
-        internal static Task DiscordClient_ChannelCreated(DiscordClient sender, DSharpPlus.EventArgs.ChannelCreateEventArgs e)
-        {
-            return null;
-        }
-
-
         internal static Task DiscordClient_GuildAvailable(DiscordClient sender, DSharpPlus.EventArgs.GuildCreateEventArgs e)
         {
             var channels = e.Guild.Channels;
@@ -66,12 +59,6 @@ namespace DCBotApi
 
             if (channel.Count() > 0)
                 _ = new Scraper(channel.First().Value);
-
-            return null;
-        }
-
-        internal static Task DiscordClient_Ready(DiscordClient sender, DSharpPlus.EventArgs.ReadyEventArgs e)
-        {
 
             return null;
         }

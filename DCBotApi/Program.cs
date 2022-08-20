@@ -9,6 +9,8 @@ namespace DCBotApi
 
         public static Scraper _scraper { get; set; }
 
+        const int intervaltime = 60000;
+
         static void Main(string[] args)
         {
 
@@ -24,7 +26,7 @@ namespace DCBotApi
                 while (true)
                 {
 
-                    await Task.Delay(60000); // <- await with cancellation
+                    await Task.Delay(intervaltime); // <- await with cancellation
                     Console.WriteLine("Updating...");
                     Update();
                 }
@@ -47,7 +49,6 @@ namespace DCBotApi
         static async Task MainAsync()
         {
             DiscordClient.GuildCreated += Events.DiscordClient_GuildCreated;
-            DiscordClient.ChannelCreated += Events.DiscordClient_ChannelCreated;
             DiscordClient.GuildAvailable += Events.DiscordClient_GuildAvailable;
 
             await DiscordClient.ConnectAsync();
