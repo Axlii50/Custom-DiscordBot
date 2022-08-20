@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
+using DCBotApi.Objects;
 
 namespace DCBotApi
 {
@@ -18,30 +19,55 @@ namespace DCBotApi
             this.Channel = Channel;
             Task.Run(() =>
             {
-                BeginScraping();
+                var Acutaldata = BeginScraping();
+                UpdateMessages(Acutaldata);
             });
         }
 
-        public async void BeginScraping()
-        {
-            HttpClient client = new HttpClient();
-            var response = await client.GetStringAsync("https://www.gamerpower.com/all/free-games");
 
-            HtmlDocument htmlresponse = new HtmlDocument();
-            htmlresponse.LoadHtml(response);
+        private void UpdateMessages(IEnumerable<GameObject> games)
+        {
+            var data = ChannelsUtil.GetMessages(Channel).Result;
+
+            foreach(var game in games)
+            {
+                Console.WriteLine(game.Name);
+                if (!data.Any(x => x.Embeds.First().Title == game.Name))
+                    ChannelsUtil.SendMessage(CreateMessage(game),Channel);
+            }
+
+            //foreach(var message in data)
+            //{
+            //    if (!games.Any(x => x.Name == message.Embeds.First().Title))
+            //        ChannelsUtil.RemoveMessage(message,Channel);
+            //}
+
+
+        }
+
+        /// <summary>
+        /// separet for functions
+        /// </summary>
+        public List<GameObject> BeginScraping()
+        {
+            List<GameObject> ScrappedData = new List<GameObject>();
+            HttpClient client = new HttpClient();
+            HtmlDocument html = new HtmlDocument();
+            List<HtmlNode> validNodes = new List<HtmlNode>();
+
+            var response = client.GetStringAsync("https://www.gamerpower.com/all/free-games").Result;
+
+            html.LoadHtml(response);
 
             //get all containers with informations
             IEnumerable<HtmlNode> nodes =
-                  htmlresponse.DocumentNode.Descendants(0)
+                  html.DocumentNode.Descendants(0)
                      .Where(n => n.HasClass("col-xl-3")
                               && n.HasClass("col-lg-4")
                               && n.HasClass("col-md-6")
                               && n.HasClass("col-sm-6")
                               && n.HasClass("mb-4"));
 
-            List<HtmlNode> validNodes = new List<HtmlNode>();
-
-            HtmlDocument html = new HtmlDocument();
             foreach (HtmlNode x in nodes)
             {
                 html.LoadHtml(x.InnerHtml);
@@ -76,17 +102,25 @@ namespace DCBotApi
 
                     var URL = "https://www.gamerpower.com" + html.DocumentNode.FirstChild.Attributes["href"].Value;
 
-                    ChannelsUtil.SendMessage(CreateMessage(GameName, ImageURL, URL),Channel);
+                    GameObject _game = new()
+                    {
+                        Name = GameName,
+                        ImageURL = ImageURL,
+                        RedirectURL = URL,
+                    };
                 }
             }
+            return ScrappedData;
         }
 
-        private DiscordEmbedBuilder CreateMessage(string GameName, string ImageURL, string URL = "")
+        
+
+        private DiscordEmbedBuilder CreateMessage(GameObject game)
         {
             DiscordEmbedBuilder embedBuilder = new DiscordEmbedBuilder();
-            embedBuilder.ImageUrl = ImageURL;
-            embedBuilder.Title = GameName;
-            embedBuilder.Url = URL;
+            embedBuilder.ImageUrl = game.ImageURL;
+            embedBuilder.Title = game.Name;
+            embedBuilder.Url = game.RedirectURL;
             embedBuilder.Build();
             return embedBuilder;
         }

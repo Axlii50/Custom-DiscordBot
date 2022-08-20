@@ -47,7 +47,7 @@ namespace DCBotApi
             {
                 Console.Write("\n" + e.Guild.Name + " -> Channel found");
 
-                ChannelsUtil.ClearChannel(channel.First().Value);
+                //ChannelsUtil.ClearChannel(channel.First().Value);
                 Console.Write(" -> Channel cleared \n");
             }
             else

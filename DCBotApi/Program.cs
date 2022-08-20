@@ -9,7 +9,7 @@ namespace DCBotApi
 
         public static Scraper _scraper { get; set; }
 
-        const int intervaltime = 60000;
+        const int intervaltime = 3600000;
 
         static void Main(string[] args)
         {
@@ -41,7 +41,7 @@ namespace DCBotApi
             {
                 Console.WriteLine("Updating Server: " + guild.Name);
                 DiscordChannel channel = guild.Channels.Where(x => x.Value.Name == "free-games").FirstOrDefault().Value;
-                ChannelsUtil.ClearChannel(channel);
+                //ChannelsUtil.ClearChannel(channel);
                 _ = new Scraper(channel);
             }
         }
