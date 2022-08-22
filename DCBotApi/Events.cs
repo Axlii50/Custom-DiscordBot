@@ -40,7 +40,14 @@ namespace DCBotApi
 
         internal static Task DiscordClient_GuildAvailable(DiscordClient sender, DSharpPlus.EventArgs.GuildCreateEventArgs e)
         {
+
+#if DEBUG
+            if (e.Guild.Name != "Testowy Server dla bota") return null;
+#endif
+
             var channels = e.Guild.Channels;
+
+            DiscordChannel newchannel = null;
             IEnumerable<KeyValuePair<ulong, DSharpPlus.Entities.DiscordChannel>> channel;
 
             if ((channel = channels.Where(x => x.Value.Name == "free-games")).Count() > 0)
@@ -53,12 +60,14 @@ namespace DCBotApi
             else
             {
                 Console.Write("\n" + e.Guild.Name + " -> Channel not found");
-                e.Guild.CreateChannelAsync("free-games", ChannelType.Text);
+                newchannel = e.Guild.CreateChannelAsync("free-games", ChannelType.Text).Result;
                 Console.Write(" -> Channel Created \n");
             }
 
-            if (channel.Count() > 0)
+            if (newchannel == null)
                 _ = new Scraper(channel.First().Value);
+            else
+                _ = new Scraper(newchannel);
 
             return null;
         }
