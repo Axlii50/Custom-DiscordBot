@@ -20,20 +20,25 @@ namespace DCBotApi
             if ((channel = channels.Where(x => x.Value.Name == "free-games")).Count() > 0)
             {
                 Console.WriteLine("Channel found on server: " + e.Guild.Name);
-
-                //ChannelPreparedService.FreeGamesChannel(channel.First().Value, e.Guild);
             }
             else
             {
                 Console.WriteLine("Channel not found: " + e.Guild.Name);
                 newchannel = e.Guild.CreateChannelAsync("free-games", ChannelType.Text).Result;
-                ChannelPreparedService.FreeGamesChannel(newchannel, e.Guild);
+                ChannelPreparedService.PrepareFreeGamesChannel(newchannel, e.Guild);
             }
 
+            Scraper scraped = null;
             if (newchannel == null)
-                _ = new Scraper(channel.First().Value);
+            {
+                scraped = new Scraper();
+                //ChannelUpdateService.UpdateFreeGamesChannel(channel.First().Value, e.Guild, scraped.ExtractedData);
+            }
             else
-                _ = new Scraper(newchannel);
+            {
+                scraped = new Scraper();
+                //ChannelUpdateService.UpdateFreeGamesChannel(newchannel, e.Guild, scraped.ExtractedData);
+            }
 
             return null;
         }
@@ -45,10 +50,10 @@ namespace DCBotApi
         }
 
 
-        internal static Task DiscordClient_GuildAvailable(DiscordClient sender, DSharpPlus.EventArgs.GuildCreateEventArgs e)
+        internal async static Task DiscordClient_GuildAvailable(DiscordClient sender, DSharpPlus.EventArgs.GuildCreateEventArgs e)
         {
 #if DEBUG
-            if (e.Guild.Name != "Testowy Server dla bota") return null;
+            if (e.Guild.Name != "Testowy Server dla bota") return;
 #endif
 
             var channels = e.Guild.Channels;
@@ -63,17 +68,25 @@ namespace DCBotApi
             else
             {
                 Console.WriteLine(e.Guild.Name + " -> Channel not found");
-                newchannel = e.Guild.CreateChannelAsync("free-games", ChannelType.Text).Result;
+                newchannel = await e.Guild.CreateChannelAsync("free-games", ChannelType.Text);
+                ChannelPreparedService.PrepareFreeGamesChannel(newchannel, e.Guild);
                 Console.WriteLine(e.Guild.Name + ": Channel Created");
+                Task.Delay(500);
             }
             Console.WriteLine();
 
+            Scraper scraped = null;
             if (newchannel == null)
-                _ = new Scraper(channel.First().Value);
+            {
+                scraped = new Scraper();
+                ChannelUpdateService.UpdateFreeGamesChannel(channel.First().Value,e.Guild,scraped.ExtractedData);
+            }
             else
-                _ = new Scraper(newchannel);
-
-            return null;
+            {
+                scraped = new Scraper();
+                ChannelUpdateService.UpdateFreeGamesChannel(newchannel, e.Guild,scraped.ExtractedData);
+            }
+            return;
         }
     }
 }

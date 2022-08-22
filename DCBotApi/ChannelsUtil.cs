@@ -30,6 +30,11 @@ namespace DCBotApi
             await channel.SendMessageAsync(message);
         }
 
+        public async static void SendMessage(DiscordMessageBuilder message, DiscordChannel channel)
+        {
+            await channel.SendMessageAsync(message);
+        }
+
         /// <summary>
         /// clear given channel from all messages
         /// </summary>

@@ -1,4 +1,6 @@
 ﻿using DSharpPlus.Entities;
+using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ namespace DCBotApi.Services.ChannelPrepare
 {
     static partial class ChannelPreparedService
     {
-        internal static void FreeGamesChannel(DiscordChannel channel, DiscordGuild server)
+        internal static void PrepareFreeGamesChannel(DiscordChannel channel, DiscordGuild server)
         {
             var roles = server.Roles;
             Console.WriteLine("changing roles on server: " + server.Name);
@@ -30,6 +32,25 @@ namespace DCBotApi.Services.ChannelPrepare
                                       DSharpPlus.Permissions.ManageMessages | DSharpPlus.Permissions.SendMessages);
                 }
             }
+
+            //preapre settings message
+            
+            SettingsFreeGames(server, channel);
+
+        }
+        private static void SettingsFreeGames(DiscordGuild server, DiscordChannel channel)
+        {
+            DiscordMessageBuilder message = new DiscordMessageBuilder();
+
+            message.Content = "Ustawienia dla kanału:\n"
+                + ":zero: - Wszystkie platformy \n"
+                + ":one: - PC\n"
+                + ":two: - Steam\n"
+                + ":three: - Epic\n"
+                + ":four: - Xbox one\n"
+                + ":five: - PS4\n";
+
+            ChannelsUtil.SendMessage(message, channel);
         }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using DSharpPlus;
+using DSharpPlus.Interactivity;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity.Extensions;
+using DCBotApi.Services.ChannelPrepare;
 
 namespace DCBotApi
 {
@@ -21,6 +24,7 @@ namespace DCBotApi
             {
                 Token = "MTAwOTU0MzkwMDY3NzAzNDE0NQ.GNgiHd.goTNYd1uBysFr429af57VMImklHV2qzFIAWWpw",
                 TokenType = TokenType.Bot,
+                MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error
             });;
 
             var task = Task.Run(async () =>  // <- marked async
@@ -39,11 +43,17 @@ namespace DCBotApi
 
         private static void Update()
         {
+
+
             foreach(var guild in DiscordClient.Guilds.Values)
             {
-                Console.WriteLine("Updating Server: " + guild.Name);
+#if DEBUG
+                if (guild.Name != "Testowy Server dla bota") continue;
+#endif
+                Console.WriteLine("Updating Server: " + guild.Name + "\n");
                 DiscordChannel channel = guild.Channels.Where(x => x.Value.Name == "free-games").FirstOrDefault().Value;
-                _ = new Scraper(channel);
+                var scrapper = new Scraper();
+                ChannelUpdateService.UpdateFreeGamesChannel(channel, guild, scrapper.ExtractedData);
             }
         }
 
@@ -53,8 +63,12 @@ namespace DCBotApi
             DiscordClient.ChannelCreated += Events.DiscordClient_ChannelCreated;
             DiscordClient.GuildAvailable += Events.DiscordClient_GuildAvailable;
 
+            DiscordClient.UseInteractivity(new InteractivityConfiguration()
+            {
+                PollBehaviour = DSharpPlus.Interactivity.Enums.PollBehaviour.KeepEmojis,
+            });
+
             await DiscordClient.ConnectAsync();
-            Console.WriteLine();
 
             await Task.Delay(-1);
         }

@@ -13,56 +13,18 @@ namespace DCBotApi
 {
     internal class Scraper
     {
-        private DiscordChannel Channel;
-        public Scraper(DiscordChannel Channel)
-        {
-            this.Channel = Channel;
-            Task.Run(() =>
-            {
-                long scrapping = 0;
-                long Updating = 0;
-                Stopwatch timer = new Stopwatch();
-                timer.Start();
-                var Acutaldata = BeginScraping();
-                scrapping = timer.ElapsedMilliseconds;
-                timer.Restart();
-                UpdateMessages(Acutaldata);
-                Updating = timer.ElapsedMilliseconds;
-                timer.Stop();
+        public List<GameObject> ExtractedData;
 
-                Console.WriteLine("Scrapping: " + scrapping + "ms" + "\n" +
-                                  "Updating: " + Updating + "ms" + "\n");
-            });
+        public Scraper()
+        {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            BeginScraping();
+            timer.Stop();
+            Console.WriteLine("Scrapping: " + timer.Elapsed + "ms");
         }
 
-
-        private void UpdateMessages(IEnumerable<GameObject> games)
-        {
-            var data = ChannelsUtil.GetMessages(Channel).Result;
-            int changes = 0;
-
-            foreach(var game in games)
-            {
-                if (!data.Any(x => x.Embeds.First().Title == game.Name))
-                {
-                    ChannelsUtil.SendMessage(CreateMessage(game), Channel);
-                    changes++;
-                }
-            }
-
-            foreach (var message in data)
-            {
-                if (!games.Any(x => x.Name == message.Embeds.First().Title))
-                {
-                    ChannelsUtil.RemoveMessage(message, Channel);
-                    changes++;
-                }
-            }
-
-            Console.WriteLine("\nchanges: " + changes + " ");
-        }
-
-        public List<GameObject> BeginScraping()
+        public void BeginScraping()
         {
             List<GameObject> ScrappedData = new List<GameObject>();
             HttpClient client = new HttpClient();
@@ -98,7 +60,7 @@ namespace DCBotApi
                 if (temp.HasValue)
                     ScrappedData.Add(temp.Value);
             }
-            return ScrappedData;
+            this.ExtractedData = ScrappedData;
         }
 
         /// <summary>
@@ -145,16 +107,6 @@ namespace DCBotApi
             };
 
             return _game;
-        }
-
-        private DiscordEmbedBuilder CreateMessage(GameObject game)
-        {
-            DiscordEmbedBuilder embedBuilder = new DiscordEmbedBuilder();
-            embedBuilder.ImageUrl = game.ImageURL;
-            embedBuilder.Title = game.Name;
-            embedBuilder.Url = game.RedirectURL;
-            embedBuilder.Build();
-            return embedBuilder;
         }
     }
 }
