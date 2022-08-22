@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DCBotApi.Objects;
+using System.Diagnostics;
 
 namespace DCBotApi
 {
@@ -18,10 +19,19 @@ namespace DCBotApi
             this.Channel = Channel;
             Task.Run(() =>
             {
-                Console.WriteLine("Scrapping");
+                long scrapping = 0;
+                long Updating = 0;
+                Stopwatch timer = new Stopwatch();
+                timer.Start();
                 var Acutaldata = BeginScraping();
-                Console.WriteLine("Updating");
+                scrapping = timer.ElapsedMilliseconds;
+                timer.Restart();
                 UpdateMessages(Acutaldata);
+                Updating = timer.ElapsedMilliseconds;
+                timer.Stop();
+
+                Console.WriteLine("Scrapping: " + scrapping + "ms" + "\n" +
+                                  "Updating: " + Updating + "ms" + "\n");
             });
         }
 
@@ -29,26 +39,29 @@ namespace DCBotApi
         private void UpdateMessages(IEnumerable<GameObject> games)
         {
             var data = ChannelsUtil.GetMessages(Channel).Result;
+            int changes = 0;
 
             foreach(var game in games)
             {
-                Console.WriteLine(game.Name);
                 if (!data.Any(x => x.Embeds.First().Title == game.Name))
-                    ChannelsUtil.SendMessage(CreateMessage(game),Channel);
+                {
+                    ChannelsUtil.SendMessage(CreateMessage(game), Channel);
+                    changes++;
+                }
             }
 
-            //foreach(var message in data)
-            //{
-            //    if (!games.Any(x => x.Name == message.Embeds.First().Title))
-            //        ChannelsUtil.RemoveMessage(message,Channel);
-            //}
+            foreach (var message in data)
+            {
+                if (!games.Any(x => x.Name == message.Embeds.First().Title))
+                {
+                    ChannelsUtil.RemoveMessage(message, Channel);
+                    changes++;
+                }
+            }
 
-
+            Console.WriteLine("\nchanges: " + changes + " ");
         }
 
-        /// <summary>
-        /// separet for functions
-        /// </summary>
         public List<GameObject> BeginScraping()
         {
             List<GameObject> ScrappedData = new List<GameObject>();
@@ -69,38 +82,41 @@ namespace DCBotApi
                               && n.HasClass("col-sm-6")
                               && n.HasClass("mb-4")).ToList();
 
+
+            //remove all expired nodes
+            List<string> Inner = new List<string>();
             foreach (HtmlNode x in nodes)
             {
-               _ = x.InnerHtml;
-                //Console.WriteLine(x.InnerHtml);
-                //Console.WriteLine();
+                string c = x.InnerHtml;
+                if (!c.Contains("expire_stamp")) Inner.Add(c);
             }
 
-            foreach (HtmlNode x in nodes)
+            //proccess all left nodes 
+            foreach (string x in Inner)
             {
-                html.LoadHtml(x.InnerHtml);
-
-                //if containers is not expired
-                if (!html.DocumentNode.Descendants().Any(x => x.HasClass("expire_stamp")))
-                {
-                    var objet = ExtractData(x);
-
-                }
+                var temp = ExtractData(x);
+                if (temp.HasValue)
+                    ScrappedData.Add(temp.Value);
             }
             return ScrappedData;
         }
 
-        public GameObject ExtractData(HtmlNode node)
+        /// <summary>
+        /// extract data from given node as string 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public GameObject? ExtractData(string node)
         {
             HtmlDocument html = new HtmlDocument();
 
             //load new html to proccesing
-            html.LoadHtml(node.InnerHtml);
+            html.LoadHtml(node);
 
             //get game name 
             string? GameName = html.DocumentNode.Descendants().FirstOrDefault(x => x.HasClass("card-title"))?.InnerText;
-            Console.WriteLine(GameName);
-            //if (GameName == null) continue;
+
+            if (GameName == null) return null;
 
             //get image url for displaying
             string ImageURL = "https://www.gamerpower.com" + html.DocumentNode.Descendants()
@@ -121,16 +137,14 @@ namespace DCBotApi
 
             var URL = "https://www.gamerpower.com" + html.DocumentNode.FirstChild.Attributes["href"].Value;
 
-
-            Console.WriteLine(GameName);
             GameObject _game = new()
             {
                 Name = GameName,
                 ImageURL = ImageURL,
                 RedirectURL = URL,
             };
-            return _game;
 
+            return _game;
         }
 
         private DiscordEmbedBuilder CreateMessage(GameObject game)

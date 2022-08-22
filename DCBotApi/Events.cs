@@ -21,7 +21,7 @@ namespace DCBotApi
             {
                 Console.WriteLine("Channel found on server: " + e.Guild.Name);
 
-                ChannelPreparedService.FreeGamesChannel(channel.First().Value, e.Guild);
+                //ChannelPreparedService.FreeGamesChannel(channel.First().Value, e.Guild);
             }
             else
             {
@@ -47,7 +47,6 @@ namespace DCBotApi
 
         internal static Task DiscordClient_GuildAvailable(DiscordClient sender, DSharpPlus.EventArgs.GuildCreateEventArgs e)
         {
-
 #if DEBUG
             if (e.Guild.Name != "Testowy Server dla bota") return null;
 #endif
@@ -59,28 +58,20 @@ namespace DCBotApi
 
             if ((channel = channels.Where(x => x.Value.Name == "free-games")).Count() > 0)
             {
-                Console.Write("\n" + e.Guild.Name + " -> Channel found");
-
-                //ChannelsUtil.ClearChannel(channel.First().Value);
-                Console.Write(" -> Channel cleared \n");
+                Console.WriteLine(e.Guild.Name + " -> Channel found ");
             }
             else
             {
-                Console.Write("\n" + e.Guild.Name + " -> Channel not found");
+                Console.WriteLine(e.Guild.Name + " -> Channel not found");
                 newchannel = e.Guild.CreateChannelAsync("free-games", ChannelType.Text).Result;
-                Console.Write(" -> Channel Created \n");
+                Console.WriteLine(e.Guild.Name + ": Channel Created");
             }
+            Console.WriteLine();
 
             if (newchannel == null)
                 _ = new Scraper(channel.First().Value);
             else
                 _ = new Scraper(newchannel);
-
-            return null;
-        }
-
-        internal static Task DiscordClient_Ready(DiscordClient sender, DSharpPlus.EventArgs.ReadyEventArgs e)
-        {
 
             return null;
         }

@@ -9,11 +9,14 @@ namespace DCBotApi
 
         public static Scraper _scraper { get; set; }
 
+#if DEBUG
+        const int intervaltime = 20000;
+#else
         const int intervaltime = 3600000;
+#endif
 
         static void Main(string[] args)
         {
-
             DiscordClient = new DiscordClient(new DiscordConfiguration()
             {
                 Token = "MTAwOTU0MzkwMDY3NzAzNDE0NQ.GNgiHd.goTNYd1uBysFr429af57VMImklHV2qzFIAWWpw",
@@ -22,12 +25,11 @@ namespace DCBotApi
 
             var task = Task.Run(async () =>  // <- marked async
             {
-                Console.WriteLine("test");
                 while (true)
                 {
 
                     await Task.Delay(intervaltime); // <- await with cancellation
-                    Console.WriteLine("Updating...");
+                    Console.WriteLine("Updating servers...");
                     Update();
                 }
             });
@@ -41,7 +43,6 @@ namespace DCBotApi
             {
                 Console.WriteLine("Updating Server: " + guild.Name);
                 DiscordChannel channel = guild.Channels.Where(x => x.Value.Name == "free-games").FirstOrDefault().Value;
-                //ChannelsUtil.ClearChannel(channel);
                 _ = new Scraper(channel);
             }
         }
@@ -49,9 +50,11 @@ namespace DCBotApi
         static async Task MainAsync()
         {
             DiscordClient.GuildCreated += Events.DiscordClient_GuildCreated;
+            DiscordClient.ChannelCreated += Events.DiscordClient_ChannelCreated;
             DiscordClient.GuildAvailable += Events.DiscordClient_GuildAvailable;
 
             await DiscordClient.ConnectAsync();
+            Console.WriteLine();
 
             await Task.Delay(-1);
         }

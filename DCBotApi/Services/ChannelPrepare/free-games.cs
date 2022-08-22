@@ -12,7 +12,7 @@ namespace DCBotApi.Services.ChannelPrepare
         internal static void FreeGamesChannel(DiscordChannel channel, DiscordGuild server)
         {
             var roles = server.Roles;
-            Console.WriteLine("Role");
+            Console.WriteLine("changing roles on server: " + server.Name);
             foreach (var role in roles)
             {
                 if (role.Value.Name == "PIPI")
