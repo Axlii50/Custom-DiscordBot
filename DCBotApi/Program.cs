@@ -43,8 +43,6 @@ namespace DCBotApi
 
         private static void Update()
         {
-
-
             foreach(var guild in DiscordClient.Guilds.Values)
             {
 #if DEBUG

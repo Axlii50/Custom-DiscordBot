@@ -106,6 +106,15 @@ namespace DCBotApi
                 RedirectURL = URL,
             };
 
+            //set all platforms for given node
+            if (node.Contains("Steam")) _game.type |= PlatformType.STEAM;
+            if (node.Contains("Windows PC")) _game.type |= PlatformType.PC;
+            if (node.Contains("Xbox Store")) _game.type |= PlatformType.XBOXONE;
+
+            //probabilit that not always will detect in node
+            //beacause there is no tag on page so only option (for now that i can think of) is just checking if in description appears "Epic games"
+            if (node.Contains("Epic Games")) _game.type |= PlatformType.EPIC;
+
             return _game;
         }
     }

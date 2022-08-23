@@ -15,16 +15,13 @@ namespace DCBotApi.Services.ChannelPrepare
     {
         internal static void UpdateFreeGamesChannel(DiscordChannel channel, DiscordGuild server, List<GameObject> games)
         {
-            long Updating = 0;
             Stopwatch timer = new Stopwatch();
             var messages = channel.GetMessagesAsync().Result;
             var settings = messages.First();
 
-
             timer.Start();
             UpdateMessages(games, channel, messages.ToList());
             timer.Stop();
-
             
             Console.WriteLine("Updating: " + timer.Elapsed + "ms" + "\n");
         }
@@ -45,6 +42,7 @@ namespace DCBotApi.Services.ChannelPrepare
             foreach (var message in messages)
             {
                 if (message.Content.StartsWith("Ustawienia")) continue;
+
                 if (!games.Any(x => x.Name == message.Embeds.First().Title))
                 {
                     ChannelsUtil.RemoveMessage(message, channel);

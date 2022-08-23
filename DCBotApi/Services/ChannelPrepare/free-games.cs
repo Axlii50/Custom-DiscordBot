@@ -34,9 +34,7 @@ namespace DCBotApi.Services.ChannelPrepare
             }
 
             //preapre settings message
-            
             SettingsFreeGames(server, channel);
-
         }
         private static void SettingsFreeGames(DiscordGuild server, DiscordChannel channel)
         {
@@ -47,8 +45,7 @@ namespace DCBotApi.Services.ChannelPrepare
                 + ":one: - PC\n"
                 + ":two: - Steam\n"
                 + ":three: - Epic\n"
-                + ":four: - Xbox one\n"
-                + ":five: - PS4\n";
+                + ":four: - Xbox one\n";
 
             ChannelsUtil.SendMessage(message, channel);
         }
