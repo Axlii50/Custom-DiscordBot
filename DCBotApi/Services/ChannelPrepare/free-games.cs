@@ -15,6 +15,7 @@ namespace DCBotApi.Services.ChannelPrepare
         {
             var roles = server.Roles;
             Console.WriteLine("changing roles on server: " + server.Name);
+
             foreach (var role in roles)
             {
                 if (role.Value.Name == "PIPI")
@@ -32,6 +33,9 @@ namespace DCBotApi.Services.ChannelPrepare
                                       DSharpPlus.Permissions.ManageMessages | DSharpPlus.Permissions.SendMessages);
                 }
             }
+
+            //clearing channel
+            ChannelsUtil.ClearChannel(channel);
 
             //preapre settings message
             SettingsFreeGames(server, channel);

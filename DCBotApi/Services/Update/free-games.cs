@@ -17,7 +17,7 @@ namespace DCBotApi.Services.ChannelPrepare
         {
             Stopwatch timer = new Stopwatch();
             var messages = channel.GetMessagesAsync().Result;
-            var settings = messages.First();
+            //var settings = messages.First();
 
             timer.Start();
             UpdateMessages(games, channel, messages.ToList());
@@ -43,7 +43,7 @@ namespace DCBotApi.Services.ChannelPrepare
             {
                 if (message.Content.StartsWith("Ustawienia")) continue;
 
-                if (!games.Any(x => x.Name == message.Embeds.First().Title))
+                if (!games.Any(x => x.Name == message.Embeds.FirstOrDefault()?.Title))
                 {
                     ChannelsUtil.RemoveMessage(message, channel);
                     changes++;

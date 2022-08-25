@@ -1,4 +1,5 @@
 ﻿using DSharpPlus.Entities;
+using DSharpPlus.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,12 +28,28 @@ namespace DCBotApi
         /// <param name="channel"></param>
         public async static void SendMessage(DiscordEmbedBuilder message, DiscordChannel channel)
         {
-            await channel.SendMessageAsync(message);
+            try
+            {
+                await channel.SendMessageAsync(message);
+
+            }
+            catch (UnauthorizedException e)
+            {
+
+                Console.WriteLine();
+            }
         }
 
         public async static void SendMessage(DiscordMessageBuilder message, DiscordChannel channel)
         {
-            await channel.SendMessageAsync(message);
+            try
+            {
+                await channel.SendMessageAsync(message);
+
+            }catch(UnauthorizedException e)
+            {
+                Console.WriteLine();
+            }
         }
 
         /// <summary>
@@ -44,8 +61,24 @@ namespace DCBotApi
             var messages = channel.GetMessagesAsync();
 
             if (messages.Result.Count > 0)
-                await channel.DeleteMessagesAsync(messages.Result);
+                try
+                {
+                    await channel.DeleteMessagesAsync(messages.Result);
+                }
+                catch (BadRequestException)
+                {
+                    ClearChannelOneByOne(channel);
+                }
         }
+
+        private async static void ClearChannelOneByOne(DiscordChannel channel)
+        {
+            var messages = channel.GetMessagesAsync();
+
+            foreach (var message in messages.Result)
+                await channel.DeleteMessageAsync(message);
+        }
+
 
         public async static Task<IEnumerable<DiscordMessage>> GetMessages(DiscordChannel channel)
         {

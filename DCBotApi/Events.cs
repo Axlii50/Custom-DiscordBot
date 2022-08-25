@@ -13,6 +13,7 @@ namespace DCBotApi
     {
         internal static Task DiscordClient_GuildCreated(DiscordClient sender, DSharpPlus.EventArgs.GuildCreateEventArgs e)
         {
+            Console.WriteLine("Joined server:" + e.Guild.Name);
             var channels = e.Guild.Channels;
             DiscordChannel newchannel = null;
             IEnumerable<KeyValuePair<ulong, DSharpPlus.Entities.DiscordChannel>> channel;
@@ -20,6 +21,7 @@ namespace DCBotApi
             if ((channel = channels.Where(x => x.Value.Name == "free-games")).Count() > 0)
             {
                 Console.WriteLine("Channel found on server: " + e.Guild.Name);
+                ChannelPreparedService.PrepareFreeGamesChannel(channel.First().Value, e.Guild);
             }
             else
             {
@@ -32,12 +34,12 @@ namespace DCBotApi
             if (newchannel == null)
             {
                 scraped = new Scraper();
-                //ChannelUpdateService.UpdateFreeGamesChannel(channel.First().Value, e.Guild, scraped.ExtractedData);
+                ChannelUpdateService.UpdateFreeGamesChannel(channel.First().Value, e.Guild, scraped.ExtractedData);
             }
             else
             {
                 scraped = new Scraper();
-                //ChannelUpdateService.UpdateFreeGamesChannel(newchannel, e.Guild, scraped.ExtractedData);
+                ChannelUpdateService.UpdateFreeGamesChannel(newchannel, e.Guild, scraped.ExtractedData);
             }
 
             return null;
