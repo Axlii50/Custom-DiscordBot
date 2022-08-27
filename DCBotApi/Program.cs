@@ -50,7 +50,7 @@ namespace DCBotApi
             foreach (var guild in DiscordClient.Guilds.Values)
             {
 #if DEBUG
-                //if (guild.Name != "Testowy Server dla bota") continue;
+                if (guild.Name != "Testowy Server dla bota") continue;
 #endif
                 Console.WriteLine("Updating Server: " + guild.Name + "\n");
                 DiscordChannel channel = guild.Channels.Where(x => x.Value.Name == "free-games").FirstOrDefault().Value;

@@ -15,14 +15,3 @@ namespace DCBotApi.Objects
     }
 }
 
-namespace DCBotApi
-{
-    internal enum PlatformType
-    {
-        All = 1,
-        PC = 2,
-        STEAM = 4,
-        EPIC = 8,
-        XBOXONE = 16,
-    }
-}

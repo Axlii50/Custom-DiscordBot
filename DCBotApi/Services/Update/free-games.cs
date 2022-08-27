@@ -13,20 +13,22 @@ namespace DCBotApi.Services.ChannelPrepare
 {
     static partial class ChannelUpdateService
     {
-        internal static void UpdateFreeGamesChannel(DiscordChannel channel, DiscordGuild server, List<GameObject> games)
+        internal static void UpdateFreeGamesChannel(DiscordChannel channel, DiscordGuild server, List<GameObject> ExtractedGames)
         {
             Stopwatch timer = new Stopwatch();
             var messages = channel.GetMessagesAsync().Result;
-            var settings_message = messages.First();
+            var settings_message = messages.Last();
 
             PlatformType settings = PlatformType.All;
-            if (settings_message.Content.Contains(":one:")) settings |= PlatformType.PC;
-            if (settings_message.Content.Contains(":two:")) settings |= PlatformType.STEAM;
-            if (settings_message.Content.Contains(":three:")) settings |= PlatformType.EPIC;
-            if (settings_message.Content.Contains(":four:")) settings |= PlatformType.XBOXONE;
+            if (settings_message.Reactions.Any(x=> x.Emoji.Name == "1️⃣")) settings |= PlatformType.PC;
+            if (settings_message.Reactions.Any(x => x.Emoji.Name == "2️⃣")) settings |= PlatformType.STEAM;
+            if (settings_message.Reactions.Any(x => x.Emoji.Name == "3️⃣")) settings |= PlatformType.EPIC;
+            if (settings_message.Reactions.Any(x => x.Emoji.Name == "4️⃣")) settings |= PlatformType.XBOXONE;
+
+            if (settings > PlatformType.All) settings -= PlatformType.All;
 
             timer.Start();
-            UpdateMessages(games, channel, messages.ToList(),settings);
+            UpdateMessages(ExtractedGames, channel, messages.ToList(),settings);
             timer.Stop();
             
             Console.WriteLine("Updating: " + timer.Elapsed + "ms" + "\n");
@@ -44,6 +46,10 @@ namespace DCBotApi.Services.ChannelPrepare
             {
                 if (!messages.Any(x => x.Embeds.FirstOrDefault()?.Title == game.Name))
                 {
+                    foreach(PlatformType x in game.type)
+                    {
+
+                    }
                     ChannelsUtil.SendMessage(CreateMessage(game), channel);
                     changes++;
                 }
