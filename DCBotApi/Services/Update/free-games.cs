@@ -17,19 +17,29 @@ namespace DCBotApi.Services.ChannelPrepare
         {
             Stopwatch timer = new Stopwatch();
             var messages = channel.GetMessagesAsync().Result;
-            //var settings = messages.First();
+            var settings_message = messages.First();
+
+            PlatformType settings = PlatformType.All;
+            if (settings_message.Content.Contains(":one:")) settings |= PlatformType.PC;
+            if (settings_message.Content.Contains(":two:")) settings |= PlatformType.STEAM;
+            if (settings_message.Content.Contains(":three:")) settings |= PlatformType.EPIC;
+            if (settings_message.Content.Contains(":four:")) settings |= PlatformType.XBOXONE;
 
             timer.Start();
-            UpdateMessages(games, channel, messages.ToList());
+            UpdateMessages(games, channel, messages.ToList(),settings);
             timer.Stop();
             
             Console.WriteLine("Updating: " + timer.Elapsed + "ms" + "\n");
         }
 
-        private static void UpdateMessages(IEnumerable<GameObject> games, DiscordChannel channel, List<DiscordMessage> messages)
+        private static void UpdateMessages(IEnumerable<GameObject> games,
+            DiscordChannel channel,
+            List<DiscordMessage> messages,
+            PlatformType settings)
         {
             int changes = 0;
 
+            //send new games
             foreach (var game in games)
             {
                 if (!messages.Any(x => x.Embeds.FirstOrDefault()?.Title == game.Name))
@@ -39,6 +49,7 @@ namespace DCBotApi.Services.ChannelPrepare
                 }
             }
 
+            //remove expired games
             foreach (var message in messages)
             {
                 if (message.Content.StartsWith("Ustawienia")) continue;
@@ -50,7 +61,7 @@ namespace DCBotApi.Services.ChannelPrepare
                 }
             }
 
-            Console.WriteLine("\nchanges: " + changes + " ");
+            Console.WriteLine("\nchanges: " + changes);
         }
 
         private static DiscordEmbedBuilder CreateMessage(GameObject game)

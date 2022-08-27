@@ -35,7 +35,6 @@ namespace DCBotApi
             {
                 while (true)
                 {
-
                     await Task.Delay(intervaltime); // <- await with cancellation
                     Console.WriteLine("Updating servers...");
                     Update();
@@ -47,14 +46,14 @@ namespace DCBotApi
 
         private static void Update()
         {
-            foreach(var guild in DiscordClient.Guilds.Values)
+            var scrapper = new Scraper();
+            foreach (var guild in DiscordClient.Guilds.Values)
             {
 #if DEBUG
                 //if (guild.Name != "Testowy Server dla bota") continue;
 #endif
                 Console.WriteLine("Updating Server: " + guild.Name + "\n");
                 DiscordChannel channel = guild.Channels.Where(x => x.Value.Name == "free-games").FirstOrDefault().Value;
-                var scrapper = new Scraper();
                 ChannelUpdateService.UpdateFreeGamesChannel(channel, guild, scrapper.ExtractedData);
             }
         }

@@ -45,7 +45,6 @@ namespace DCBotApi.Services.ChannelPrepare
             DiscordMessageBuilder message = new DiscordMessageBuilder();
 
             message.Content = "Ustawienia dla kanału:\n"
-                + ":zero: - Wszystkie platformy \n"
                 + ":one: - PC\n"
                 + ":two: - Steam\n"
                 + ":three: - Epic\n"

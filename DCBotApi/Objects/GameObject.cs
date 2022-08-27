@@ -19,10 +19,10 @@ namespace DCBotApi
 {
     internal enum PlatformType
     {
-        All,
-        PC,
-        STEAM,
-        EPIC,
-        XBOXONE,
+        All = 1,
+        PC = 2,
+        STEAM = 4,
+        EPIC = 8,
+        XBOXONE = 16,
     }
 }

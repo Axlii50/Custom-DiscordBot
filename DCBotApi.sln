@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DCBotApi", "DCBotApi\DCBotApi.csproj", "{3C7121D7-2FA7-4CCD-A0BE-A891464FC1FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DCBotApi", "DCBotApi\DCBotApi.csproj", "{3C7121D7-2FA7-4CCD-A0BE-A891464FC1FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBot", "DiscordBot\DiscordBot.csproj", "{E3B8D254-DDCE-431A-8BA3-0D4BA943DCD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{3C7121D7-2FA7-4CCD-A0BE-A891464FC1FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C7121D7-2FA7-4CCD-A0BE-A891464FC1FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C7121D7-2FA7-4CCD-A0BE-A891464FC1FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3B8D254-DDCE-431A-8BA3-0D4BA943DCD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3B8D254-DDCE-431A-8BA3-0D4BA943DCD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3B8D254-DDCE-431A-8BA3-0D4BA943DCD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3B8D254-DDCE-431A-8BA3-0D4BA943DCD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
