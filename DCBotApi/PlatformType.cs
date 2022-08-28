@@ -27,20 +27,32 @@ namespace DCBotApi
         /// <returns></returns>
         public static IEnumerator<PlatformType> GetEnumerator(this PlatformType type)
         {
-            List<PlatformType> platforms = new List<PlatformType>();
+            bool allplatforms = true;
             if (type.HasFlag(PlatformType.PC))
+            {
                 yield return PlatformType.PC;
+                allplatforms = false;
+            }
 
             if (type.HasFlag(PlatformType.STEAM))
+            {
                 yield return PlatformType.STEAM;
+                allplatforms = false;
+            }
 
             if (type.HasFlag(PlatformType.XBOXONE))
+            {
                 yield return PlatformType.XBOXONE;
+                allplatforms = false;
+            }
 
             if (type.HasFlag(PlatformType.EPIC))
+            {
                 yield return PlatformType.EPIC;
+                allplatforms = false;
+            }
 
-            if (platforms.Count == 0) yield return PlatformType.All;
+            if (allplatforms) yield return PlatformType.All;
         }
     }
 }

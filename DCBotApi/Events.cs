@@ -73,7 +73,7 @@ namespace DCBotApi
                 newchannel = await e.Guild.CreateChannelAsync("free-games", ChannelType.Text);
                 ChannelPreparedService.PrepareFreeGamesChannel(newchannel, e.Guild);
                 Console.WriteLine(e.Guild.Name + ": Channel Created");
-                Task.Delay(500);
+                //Task.Delay(500);
             }
             Console.WriteLine();
 

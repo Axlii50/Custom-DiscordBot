@@ -16,7 +16,15 @@ namespace DCBotApi.Services.ChannelPrepare
         internal static void UpdateFreeGamesChannel(DiscordChannel channel, DiscordGuild server, List<GameObject> ExtractedGames)
         {
             Stopwatch timer = new Stopwatch();
-            var messages = channel.GetMessagesAsync().Result;
+            IReadOnlyList<DiscordMessage> messages = null;
+            try
+            {
+                 messages = channel.GetMessagesAsync().Result;
+            }catch(UnauthorizedAccessException e)
+            {
+                return;
+            };
+
             var settings_message = messages.Last();
 
             PlatformType settings = PlatformType.All;
@@ -46,12 +54,16 @@ namespace DCBotApi.Services.ChannelPrepare
             {
                 if (!messages.Any(x => x.Embeds.FirstOrDefault()?.Title == game.Name))
                 {
-                    foreach(PlatformType x in game.type)
-                    {
+                    //if any platform match with settings it will display
+                    bool add = false;
+                    foreach (PlatformType x in game.type)
+                        if (settings.HasFlag(x)) add = true;
 
+                    if (add)
+                    {
+                        ChannelsUtil.SendMessage(CreateMessage(game), channel);
+                        changes++;
                     }
-                    ChannelsUtil.SendMessage(CreateMessage(game), channel);
-                    changes++;
                 }
             }
 
