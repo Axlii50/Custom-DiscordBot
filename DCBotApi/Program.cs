@@ -3,6 +3,8 @@ using DSharpPlus.Interactivity;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
 using DCBotApi.Services.ChannelPrepare;
+using DSharpPlus.CommandsNext;
+using DCBotApi.commands;
 
 namespace DCBotApi
 {
@@ -74,9 +76,24 @@ namespace DCBotApi
                 PollBehaviour = DSharpPlus.Interactivity.Enums.PollBehaviour.KeepEmojis,
             });
 
+            var commands = DiscordClient.UseCommandsNext(new CommandsNextConfiguration()
+            {
+                StringPrefixes = new[] { "!" },
+                EnableDefaultHelp = false
+            });;
+
+            RegisterCommands(commands);
+
             await DiscordClient.ConnectAsync();
 
             await Task.Delay(-1);
+        }
+
+        private static void RegisterCommands(CommandsNextExtension commands)
+        {
+            commands.RegisterCommands<Help>();
+            commands.RegisterCommands<ReCreateConfig>();
+            commands.RegisterCommands<SetMainChannel>();
         }
     }
 }
