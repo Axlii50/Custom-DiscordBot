@@ -10,7 +10,7 @@ namespace DCBotApi.Configuration
 {
     internal class ConfigMenager
     {
-        public static void CreateConfig(ulong id, ulong freegameschannelID)
+        public static void CreateConfig(ulong id, ulong freegameschannelID = 0)
         {
             Config config = new Config(id);
             config.FGChannelID = freegameschannelID;
@@ -45,6 +45,24 @@ namespace DCBotApi.Configuration
                 }
             }
             File.WriteAllLines(ConfigPath, lines);
+        }
+
+
+        public static ulong GetChannelID(ulong serverId, ChannelEnum channel)
+        {
+            string ChannelName = channel.ToString() + "ID";
+            string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
+            string configtext = File.ReadAllText(ConfigPath);
+
+            Config config = JsonConvert.DeserializeObject<Config>(configtext);
+
+            switch (channel)
+            {
+                case ChannelEnum.FGChannel: return config.FGChannelID;
+                case ChannelEnum.MainChannel: return config.MainChannelID;
+
+                default: return 0;
+            }
         }
     }
 }

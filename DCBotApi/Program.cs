@@ -5,6 +5,7 @@ using DSharpPlus.Interactivity.Extensions;
 using DCBotApi.Services.ChannelPrepare;
 using DSharpPlus.CommandsNext;
 using DCBotApi.commands;
+using DCBotApi.Configuration;
 
 namespace DCBotApi
 {
@@ -51,7 +52,7 @@ namespace DCBotApi
             MainAsync().GetAwaiter().GetResult();
         }
 
-        private static void Update()
+        static void Update()
         {
             var scrapper = new Scraper();
             foreach (var guild in DiscordClient.Guilds.Values)
@@ -60,7 +61,13 @@ namespace DCBotApi
                 if (guild.Name != "Testowy Server dla bota") continue;
 #endif
                 Console.WriteLine("Updating Server: " + guild.Name + "\n");
-                DiscordChannel channel = guild.Channels.Where(x => x.Value.Name == "free-games").FirstOrDefault().Value;
+                ulong channelid = ConfigMenager.GetChannelID(guild.Id, ChannelEnum.FGChannel);
+                DiscordChannel channel = guild.Channels.Where(x => x.Key == channelid).FirstOrDefault().Value;
+                if(channel == null)
+                {
+                    Console.WriteLine("Channel couldnt be found by id: " + channelid);
+                    continue;
+                }
                 ChannelUpdateService.UpdateFreeGamesChannel(channel, guild, scrapper.ExtractedData);
             }
         }
@@ -68,7 +75,6 @@ namespace DCBotApi
         static async Task MainAsync()
         {
             DiscordClient.GuildCreated += Events.DiscordClient_GuildCreated;
-            DiscordClient.ChannelCreated += Events.DiscordClient_ChannelCreated;
             DiscordClient.GuildAvailable += Events.DiscordClient_GuildAvailable;
 
             DiscordClient.UseInteractivity(new InteractivityConfiguration()
