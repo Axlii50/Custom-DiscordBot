@@ -2,6 +2,7 @@
 using DCBotApi.Services.ChannelPrepare;
 using DSharpPlus;
 using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,18 @@ namespace DCBotApi
     {
         internal static Task DiscordClient_GuildCreated(DiscordClient sender, DSharpPlus.EventArgs.GuildCreateEventArgs e)
         {
-            ConfigMenager.CreateConfig(e.Guild.Id);
-
             Console.WriteLine("Joined server:" + e.Guild.Name);
 
+
+            ulong FreeGamesChannelID = Freegameschannel(e);
+
+            ConfigMenager.CreateConfig(e.Guild.Id, FreeGamesChannelID);
+
+            return null;
+        }
+
+        private static ulong Freegameschannel(GuildCreateEventArgs e)
+        {
             var channels = e.Guild.Channels;
             DiscordChannel newchannel = null;
             IEnumerable<KeyValuePair<ulong, DSharpPlus.Entities.DiscordChannel>> channel;
@@ -39,16 +48,15 @@ namespace DCBotApi
             {
                 scraped = new Scraper();
                 ChannelUpdateService.UpdateFreeGamesChannel(channel.First().Value, e.Guild, scraped.ExtractedData);
+                return channel.First().Value.Id;
             }
             else
             {
                 scraped = new Scraper();
                 ChannelUpdateService.UpdateFreeGamesChannel(newchannel, e.Guild, scraped.ExtractedData);
+                return newchannel.Id;
             }
-
-            return null;
         }
-
 
         internal static Task DiscordClient_ChannelCreated(DiscordClient sender, DSharpPlus.EventArgs.ChannelCreateEventArgs e)
         {
@@ -63,7 +71,6 @@ namespace DCBotApi
 #endif
 
             var channels = e.Guild.Channels;
-
             DiscordChannel newchannel = null;
             IEnumerable<KeyValuePair<ulong, DSharpPlus.Entities.DiscordChannel>> channel;
 
