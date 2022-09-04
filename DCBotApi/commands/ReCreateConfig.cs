@@ -1,4 +1,5 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using DCBotApi.Configuration;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,9 @@ namespace DCBotApi.commands
         [Command("ReCreateConfig")]
         public async Task ReCreateConfigCommand(CommandContext ctx)
         {
-            //if (ctx.Member.Id != 251724220617326592) return;
+            if (ctx.Member.Id != 251724220617326592) return;
+
+            ConfigMenager.CreateConfig(ctx.Guild.Id);
 
             await ctx.RespondAsync($"Guild:{ctx.Guild.Id}");
         }
