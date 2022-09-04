@@ -16,6 +16,8 @@ namespace DCBotApi.commands
         {
             Configuration.ConfigMenager.SetChannelId(ctx.Guild.Id, ChannelId, ChannelEnum.FGChannel);
 
+            Console.WriteLine("Channel free games id has been updated on: " + ctx.Guild.Name);
+
             await ctx.RespondAsync($"Kanał ustawiony");
         }
     }

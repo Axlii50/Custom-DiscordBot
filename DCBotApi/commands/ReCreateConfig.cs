@@ -23,7 +23,7 @@ namespace DCBotApi.commands
 
             ConfigMenager.CreateConfig(ctx.Guild.Id);
 
-            await ctx.RespondAsync($"Guild:{ctx.Guild.Id}");
+            await ctx.RespondAsync($"Creationg of configuration file is finished");
         }
     }
 }

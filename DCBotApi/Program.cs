@@ -100,6 +100,7 @@ namespace DCBotApi
             commands.RegisterCommands<Help>();
             commands.RegisterCommands<ReCreateConfig>();
             commands.RegisterCommands<SetMainChannel>();
+            commands.RegisterCommands<SetFGChannel>();
         }
     }
 }
