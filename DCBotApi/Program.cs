@@ -20,6 +20,10 @@ namespace DCBotApi
 
         static void Main(string[] args)
         {
+            //create folder for configs
+            if (!Directory.Exists(DCBotApi.Utility.Directory.GetPath("Configs")))
+                Directory.CreateDirectory(DCBotApi.Utility.Directory.GetPath("Configs"));
+
             DiscordClient = new DiscordClient(new DiscordConfiguration()
             {
                 Token = "MTAwOTU0MzkwMDY3NzAzNDE0NQ.GNgiHd.goTNYd1uBysFr429af57VMImklHV2qzFIAWWpw",
@@ -27,7 +31,8 @@ namespace DCBotApi
 #if DEBUG
                 MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug
 #else
-                MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error
+                MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error,
+                
 #endif
             });;
 

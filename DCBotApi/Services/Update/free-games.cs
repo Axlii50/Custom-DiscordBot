@@ -33,7 +33,7 @@ namespace DCBotApi.Services.ChannelPrepare
             if (settings_message.Reactions.Any(x => x.Emoji.Name == "3️⃣")) settings |= PlatformType.EPIC;
             if (settings_message.Reactions.Any(x => x.Emoji.Name == "4️⃣")) settings |= PlatformType.XBOXONE;
 
-            if (settings > PlatformType.All) settings -= PlatformType.All;
+            //if (settings != PlatformType.All) settings -= PlatformType.All;
 
             timer.Start();
             UpdateMessages(ExtractedGames, channel, messages.ToList(),settings);
@@ -56,8 +56,16 @@ namespace DCBotApi.Services.ChannelPrepare
                 {
                     //if any platform match with settings it will display
                     bool add = false;
-                    foreach (PlatformType x in game.type)
-                        if (settings.HasFlag(x)) add = true;
+                    if (!settings.HasFlag(PlatformType.All))
+                    {
+                        foreach (PlatformType x in game.type)
+                            if (settings.HasFlag(x))
+                                add = true;
+                    }
+                    else
+                    {
+                        add = true;
+                    }
 
                     if (add)
                     {

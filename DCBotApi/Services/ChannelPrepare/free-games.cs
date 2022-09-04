@@ -40,6 +40,7 @@ namespace DCBotApi.Services.ChannelPrepare
             //preapre settings message
             SettingsFreeGames(server, channel);
         }
+
         private static void SettingsFreeGames(DiscordGuild server, DiscordChannel channel)
         {
             DiscordMessageBuilder message = new DiscordMessageBuilder();

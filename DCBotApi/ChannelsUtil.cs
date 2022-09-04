@@ -79,7 +79,6 @@ namespace DCBotApi
                 await channel.DeleteMessageAsync(message);
         }
 
-
         public async static Task<IEnumerable<DiscordMessage>> GetMessages(DiscordChannel channel)
         {
             return await channel.GetMessagesAsync();

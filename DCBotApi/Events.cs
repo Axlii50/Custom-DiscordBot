@@ -1,4 +1,5 @@
-﻿using DCBotApi.Services.ChannelPrepare;
+﻿using DCBotApi.Configuration;
+using DCBotApi.Services.ChannelPrepare;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using System;
@@ -13,7 +14,10 @@ namespace DCBotApi
     {
         internal static Task DiscordClient_GuildCreated(DiscordClient sender, DSharpPlus.EventArgs.GuildCreateEventArgs e)
         {
+            ConfigMenager.CreateConfig(e.Guild.Id);
+
             Console.WriteLine("Joined server:" + e.Guild.Name);
+
             var channels = e.Guild.Channels;
             DiscordChannel newchannel = null;
             IEnumerable<KeyValuePair<ulong, DSharpPlus.Entities.DiscordChannel>> channel;
@@ -73,7 +77,6 @@ namespace DCBotApi
                 newchannel = await e.Guild.CreateChannelAsync("free-games", ChannelType.Text);
                 ChannelPreparedService.PrepareFreeGamesChannel(newchannel, e.Guild);
                 Console.WriteLine(e.Guild.Name + ": Channel Created");
-                //Task.Delay(500);
             }
             Console.WriteLine();
 
