@@ -14,6 +14,8 @@ namespace DCBotApi.commands
         [Command("SetMainChannel")]
         public async Task SetMainChannelCommand(CommandContext ctx, ulong ChannelId)
         {
+            if (!Admins.AdminsID.Contains(ctx.Member.Id)) return;
+
             Configuration.ConfigMenager.SetChannelId(ctx.Guild.Id, ChannelId, ChannelEnum.MainChannel);
 
             await ctx.RespondAsync($"Kanał ustawiony");

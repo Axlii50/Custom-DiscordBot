@@ -17,7 +17,7 @@ namespace DCBotApi.commands
         [Command("RecreateFGChannel")]
         public async Task RecreateFGChannelCommand(CommandContext ctx)
         {
-            if (ctx.Member.Id != 251724220617326592) return;
+            if (!Admins.AdminsID.Contains(ctx.Member.Id)) return;
 
             DiscordChannel Channel = await ctx.Guild.CreateChannelAsync("free-games", ChannelType.Text);
 

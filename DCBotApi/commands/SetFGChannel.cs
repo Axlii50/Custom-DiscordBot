@@ -14,6 +14,8 @@ namespace DCBotApi.commands
         [Command("SetFGChannel")]
         public async Task SetFGChannelCommand(CommandContext ctx, ulong ChannelId)
         {
+            if (!Admins.AdminsID.Contains(ctx.Member.Id)) return;
+
             Configuration.ConfigMenager.SetChannelId(ctx.Guild.Id, ChannelId, ChannelEnum.FGChannel);
 
             Console.WriteLine("Channel free games id has been updated on: " + ctx.Guild.Name);

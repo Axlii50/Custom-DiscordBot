@@ -63,7 +63,7 @@ namespace DCBotApi
 #if DEBUG
             if (e.Guild.Name != "Testowy Server dla bota") return;
 #endif
-
+            Console.WriteLine("Server: " + e.Guild.Name);
             var channels = e.Guild.Channels;
             DiscordChannel Channel = null;
             ulong channelid = ConfigMenager.GetChannelID(e.Guild.Id, ChannelEnum.FGChannel);
