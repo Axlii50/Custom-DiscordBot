@@ -50,7 +50,6 @@ namespace DCBotApi.Configuration
 
         public static ulong GetChannelID(ulong serverId, ChannelEnum channel)
         {
-            string ChannelName = channel.ToString() + "ID";
             string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
             string configtext = File.ReadAllText(ConfigPath);
 

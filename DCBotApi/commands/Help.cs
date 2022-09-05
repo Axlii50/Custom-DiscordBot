@@ -21,9 +21,9 @@ namespace DCBotApi.commands
             //TODO change this to embede message for better looking
             await ctx.RespondAsync(
                 "!Help   display all commands \n" +
-                $"!ReCreateConfig   recreates configuration file (ADMIN)\n" +
-                $"!SetMainChannel <ChannelID>   set main channel id for bot \n" +
-                $"!SetFGChannel <ChannelID>   change channel for free games updates");
+                "!ReCreateConfig   recreates configuration file (ADMIN)\n" +
+                "!SetMainChannel <ChannelID>   set main channel id for bot \n" +
+                "!SetFGChannel <ChannelID>   change channel for free games updates");
         }
     }
 }
