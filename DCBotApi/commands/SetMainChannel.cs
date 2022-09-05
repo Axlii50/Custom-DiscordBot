@@ -12,6 +12,7 @@ namespace DCBotApi.commands
     internal class SetMainChannel : BaseCommandModule
     {
         [Command("SetMainChannel")]
+        [RequireGuild]
         public async Task SetMainChannelCommand(CommandContext ctx, ulong ChannelId)
         {
             if (!Admins.AdminsID.Contains(ctx.Member.Id)) return;

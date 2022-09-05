@@ -15,6 +15,7 @@ namespace DCBotApi.commands
     internal class RecreateChannelFG : BaseCommandModule
     {
         [Command("RecreateFGChannel")]
+        [RequireGuild]
         public async Task RecreateFGChannelCommand(CommandContext ctx)
         {
             if (!Admins.AdminsID.Contains(ctx.Member.Id)) return;

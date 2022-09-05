@@ -17,9 +17,10 @@ namespace DCBotApi.commands
         /// <param name="ctx"></param>
         /// <returns></returns>
         [Command("ReCreateConfig")]
+        [RequireGuild]
         public async Task ReCreateConfigCommand(CommandContext ctx)
         {
-            if (ctx.Member.Id != 251724220617326592) return;
+            if (!Admins.AdminsID.Contains(ctx.Member.Id)) return;
 
             ConfigMenager.CreateConfig(ctx.Guild.Id);
 

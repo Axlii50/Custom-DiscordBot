@@ -12,6 +12,7 @@ namespace DCBotApi.commands
     internal class SetFGChannel : BaseCommandModule
     {
         [Command("SetFGChannel")]
+        [RequireGuild]
         public async Task SetFGChannelCommand(CommandContext ctx, ulong ChannelId)
         {
             if (!Admins.AdminsID.Contains(ctx.Member.Id)) return;
