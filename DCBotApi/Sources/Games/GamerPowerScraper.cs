@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 using DCBotApi.Objects;
 using System.Diagnostics;
 
-namespace DCBotApi
+namespace DCBotApi.Sources.Games
 {
-    internal class Scraper
+    internal class GamerPowerScraper
     {
         public List<GameObject> ExtractedData;
 
-        public Scraper()
+        public GamerPowerScraper()
         {
             Stopwatch timer = new Stopwatch();
             timer.Start();
@@ -60,7 +60,7 @@ namespace DCBotApi
                 if (temp.HasValue)
                     ScrappedData.Add(temp.Value);
             }
-            this.ExtractedData = ScrappedData;
+            ExtractedData = ScrappedData;
         }
 
         /// <summary>

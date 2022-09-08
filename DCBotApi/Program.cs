@@ -6,6 +6,7 @@ using DCBotApi.Services.ChannelPrepare;
 using DSharpPlus.CommandsNext;
 using DCBotApi.commands;
 using DCBotApi.Configuration;
+using DCBotApi.Sources.Games;
 
 namespace DCBotApi
 {
@@ -13,13 +14,14 @@ namespace DCBotApi
     {
         public static DiscordClient DiscordClient { get; set; }
 
-        public static Scraper _scraper { get; set; }
+        public static GamerPowerScraper _scraper { get; set; }
 
 #if DEBUG
         const int intervaltime = 20000;
 #else
-        const int intervaltime = 3600000;
+        const int intervaltime = 600000;
 #endif
+
 
         static void Main(string[] args)
         {
@@ -34,8 +36,7 @@ namespace DCBotApi
 #if DEBUG
                 MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug
 #else
-                MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error,
-                
+                MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error
 #endif
             });;
 
@@ -54,21 +55,35 @@ namespace DCBotApi
 
         static void Update()
         {
-            var scrapper = new Scraper();
+            var scrapper = new GamerPowerScraper();
             foreach (var guild in DiscordClient.Guilds.Values)
             {
 #if DEBUG
                 if (guild.Name != "Testowy Server dla bota") continue;
 #endif
-                Console.WriteLine("Updating Server: " + guild.Name + "\n");
-                ulong channelid = ConfigMenager.GetChannelID(guild.Id, ChannelEnum.FGChannel);
-                DiscordChannel channel = guild.Channels.Where(x => x.Key == channelid).FirstOrDefault().Value;
-                if(channel == null)
+                int ticks = 0;
+                int Interval = 0;
+                if ((ticks = ConfigMenager.GetTicks(guild.Id)) == (Interval = ConfigMenager.GetIntervalTicks(guild.Id)) - 1)
                 {
-                    Console.WriteLine("Channel couldnt be found by id: " + channelid);
-                    continue;
+                    Console.WriteLine("Updating Server: " + guild.Name + "\n");
+                    ulong channelid = ConfigMenager.GetChannelID(guild.Id, ChannelEnum.FGChannel);
+                    DiscordChannel channel = guild.Channels.Where(x => x.Key == channelid).FirstOrDefault().Value;
+                    if (channel == null)
+                    {
+                        Console.WriteLine("Channel couldnt be found by id: " + channelid);
+                        continue;
+                    }
+                    ChannelUpdateService.UpdateFreeGamesChannel(channel, guild, scrapper.ExtractedData);
+
+                    ConfigMenager.SetTicks(guild.Id, 0);
                 }
-                ChannelUpdateService.UpdateFreeGamesChannel(channel, guild, scrapper.ExtractedData);
+                else
+                {
+                    Console.WriteLine($"Ticks update for server: {guild.Name}          to: {++ticks}/{Interval}" +
+                        $"\n aproximate time for update: {(Math.Abs(Interval - ticks) * 10)} min" );
+
+                    ConfigMenager.SetTicks(guild.Id, ticks++);
+                }
             }
         }
 
@@ -102,6 +117,7 @@ namespace DCBotApi
             commands.RegisterCommands<SetMainChannel>();
             commands.RegisterCommands<SetFGChannel>();
             commands.RegisterCommands<RecreateChannelFG>();
+            commands.RegisterCommands<DisplayAdmin>();
         }
     }
 }

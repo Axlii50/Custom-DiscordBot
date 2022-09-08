@@ -30,6 +30,7 @@ namespace DCBotApi.Configuration
             Console.WriteLine($"Config file: \n {ConfigPath} \n {id}");
         }
 
+        //rewrite this all SET/GET functions to few universal for all of them
 
         public static void SetChannelId(ulong serverId, ulong channelid, ChannelEnum channel)
         {
@@ -62,6 +63,57 @@ namespace DCBotApi.Configuration
 
                 default: return 0;
             }
+        }
+
+
+        public static void SetIntervalTicks(ulong serverId, int numberofticks)
+        {
+            string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
+            string[] lines = File.ReadAllLines(ConfigPath);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].Contains("CustomNumberOfticks"))
+                {
+                    lines[i] = string.Format(@"  ""{0}"": {1},", "CustomNumberOfticks", numberofticks);
+                    break;
+                }
+            }
+            File.WriteAllLines(ConfigPath, lines);
+        }
+
+
+        public static int GetIntervalTicks(ulong serverId)
+        {
+            string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
+            string configtext = File.ReadAllText(ConfigPath);
+
+            Config config = JsonConvert.DeserializeObject<Config>(configtext);
+            return config.CustomNumberOfticks;
+        }
+
+
+        public static void SetTicks(ulong serverId, int numberofticks)
+        {
+            string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
+            string[] lines = File.ReadAllLines(ConfigPath);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].Contains("CurrentTicks"))
+                {
+                    lines[i] = string.Format(@"  ""{0}"": {1},", "CurrentTicks", numberofticks);
+                    break;
+                }
+            }
+            File.WriteAllLines(ConfigPath, lines);
+        }
+
+        public static int GetTicks(ulong serverId)
+        {
+            string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
+            string configtext = File.ReadAllText(ConfigPath);
+
+            Config config = JsonConvert.DeserializeObject<Config>(configtext);
+            return config.CurrentTicks;
         }
     }
 }

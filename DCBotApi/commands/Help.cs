@@ -22,8 +22,10 @@ namespace DCBotApi.commands
             await ctx.RespondAsync(
                 "!Help   display all commands \n" +
                 "!ReCreateConfig   recreates configuration file (ADMIN)\n" +
-                "!SetMainChannel <ChannelID>   set main channel id for bot \n" +
-                "!SetFGChannel <ChannelID>   change channel for free games updates");
+                "!SetMainChannel <ChannelID>   set main channel id for bot (ADMIN) \n" +
+                "!SetFGChannel <ChannelID>   change channel for free games updates (ADMIN) \n" +
+                "!RecreateChannelFG (ADMIN) \n" +
+                "!SetTicks <Number> defualt number of ticks is 6 (10 min per tick)");
         }
     }
 }

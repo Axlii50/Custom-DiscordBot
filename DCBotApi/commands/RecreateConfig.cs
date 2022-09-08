@@ -17,6 +17,7 @@ namespace DCBotApi.commands
         /// <param name="ctx"></param>
         /// <returns></returns>
         [Command("ReCreateConfig")]
+        [RequireGuild]
         public async Task ReCreateConfigCommand(CommandContext ctx)
         {
             if (!Admins.AdminsID.Contains(ctx.Member.Id)) return;

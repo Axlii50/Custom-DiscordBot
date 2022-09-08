@@ -25,6 +25,12 @@ namespace DCBotApi.Configuration
         /// </summary>
         public int CustomNumberOfticks { get; set; } = 6;
 
+        /// <summary>
+        /// represent how many ticks have passed 
+        /// update occures when currents ticks is equal to custom number of ticks 
+        /// </summary>
+        public int CurrentTicks { get; set; } = 0;
+
         
 
     }

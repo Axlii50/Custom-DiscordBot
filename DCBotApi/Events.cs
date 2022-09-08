@@ -1,5 +1,6 @@
 ﻿using DCBotApi.Configuration;
 using DCBotApi.Services.ChannelPrepare;
+using DCBotApi.Sources.Games;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
@@ -43,16 +44,16 @@ namespace DCBotApi
                 ChannelPreparedService.PrepareFreeGamesChannel(newchannel, e.Guild);
             }
 
-            Scraper scraped = null;
+            GamerPowerScraper scraped = null;
             if (newchannel == null)
             {
-                scraped = new Scraper();
+                scraped = new GamerPowerScraper();
                 ChannelUpdateService.UpdateFreeGamesChannel(channel.First().Value, e.Guild, scraped.ExtractedData);
                 return channel.First().Value.Id;
             }
             else
             {
-                scraped = new Scraper();
+                scraped = new GamerPowerScraper();
                 ChannelUpdateService.UpdateFreeGamesChannel(newchannel, e.Guild, scraped.ExtractedData);
                 return newchannel.Id;
             }
@@ -81,7 +82,7 @@ namespace DCBotApi
             }
             Console.WriteLine();
 
-            Scraper scraped = new Scraper();
+            GamerPowerScraper scraped = new GamerPowerScraper();
             ChannelUpdateService.UpdateFreeGamesChannel(Channel, e.Guild, scraped.ExtractedData);
             return;
         }
