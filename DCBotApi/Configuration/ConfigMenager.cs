@@ -10,6 +10,11 @@ namespace DCBotApi.Configuration
 {
     internal class ConfigMenager
     {
+        /// <summary>
+        /// create config for given server ID with/without free gamess channel id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="freegameschannelID"></param>
         public static void CreateConfig(ulong id, ulong freegameschannelID = 0)
         {
             Config config = new Config(id);
@@ -21,6 +26,10 @@ namespace DCBotApi.Configuration
             File.WriteAllText(DCBotApi.Utility.Directory.GetPath($"Configs\\{id}.txt"), configjson);
         }
 
+        /// <summary>
+        /// create config file in specific path and specific name that coresponds a ID of server
+        /// </summary>
+        /// <param name="id"></param>
         private static void PrepareConfigFile(ulong id)
         {
             string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{id}.txt");
@@ -32,6 +41,12 @@ namespace DCBotApi.Configuration
 
         //rewrite this all SET/GET functions to few universal for all of them
 
+        /// <summary>
+        /// for given type of channel set its ID in config file for given id of server
+        /// </summary>
+        /// <param name="serverId"></param>
+        /// <param name="channelid"></param>
+        /// <param name="channel"></param>
         public static void SetChannelId(ulong serverId, ulong channelid, ChannelEnum channel)
         {
             string ChannelName = channel.ToString() + "ID";
@@ -48,7 +63,12 @@ namespace DCBotApi.Configuration
             File.WriteAllLines(ConfigPath, lines);
         }
 
-
+        /// <summary>
+        /// get channel id of specific type for specific server ids
+        /// </summary>
+        /// <param name="serverId"></param>
+        /// <param name="channel"></param>
+        /// <returns></returns>
         public static ulong GetChannelID(ulong serverId, ChannelEnum channel)
         {
             string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
