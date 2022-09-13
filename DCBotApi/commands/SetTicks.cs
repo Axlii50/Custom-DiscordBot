@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DCBotApi.commands
 {
-    internal class SetUpdateTicks : BaseCommandModule
+    internal class SetTicks : BaseCommandModule
     {
         [Command("SetTicks")]
         [RequireGuild]

@@ -31,15 +31,18 @@ namespace DCBotApi
             try
             {
                 await channel.SendMessageAsync(message);
-
             }
             catch (UnauthorizedException e)
             {
-
                 Console.WriteLine();
             }
         }
 
+        /// <summary>
+        /// given send message to specific channel 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="channel"></param>
         public async static void SendMessage(DiscordMessageBuilder message, DiscordChannel channel)
         {
             try
@@ -71,6 +74,10 @@ namespace DCBotApi
                 }
         }
 
+        /// <summary>
+        /// delete all messages on given channel eache message separetle 
+        /// </summary>
+        /// <param name="channel"></param>
         private async static void ClearChannelOneByOne(DiscordChannel channel)
         {
             var messages = channel.GetMessagesAsync();
@@ -79,11 +86,21 @@ namespace DCBotApi
                 await channel.DeleteMessageAsync(message);
         }
 
+        /// <summary>
+        /// retreview all messages from given channel 
+        /// </summary>
+        /// <param name="channel"></param>
+        /// <returns></returns>
         public async static Task<IEnumerable<DiscordMessage>> GetMessages(DiscordChannel channel)
         {
             return await channel.GetMessagesAsync();
         }
 
+        /// <summary>
+        /// remove given message from given channel 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="channel"></param>
         public async static void RemoveMessage(DiscordMessage message, DiscordChannel channel)
         {
            await channel.DeleteMessageAsync(message);

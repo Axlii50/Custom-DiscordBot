@@ -18,9 +18,10 @@ namespace DCBotApi
         {
             Console.WriteLine("Joined server:" + e.Guild.Name);
 
-
+            //get free games channel id and prepare channel
             ulong FreeGamesChannelID = Freegameschannel(e);
 
+            //create config file with server id and channel id 
             ConfigMenager.CreateConfig(e.Guild.Id, FreeGamesChannelID);
 
             return null;
@@ -28,19 +29,25 @@ namespace DCBotApi
 
         private static ulong Freegameschannel(GuildCreateEventArgs e)
         {
+            //get all channels on server
             var channels = e.Guild.Channels;
             DiscordChannel newchannel = null;
+
             IEnumerable<KeyValuePair<ulong, DSharpPlus.Entities.DiscordChannel>> channel;
 
+            //check if there is channel with name "free games"
+            //if there is non of such channel then create new and save id 
             if ((channel = channels.Where(x => x.Value.Name == "free-games")).Count() > 0)
             {
                 Console.WriteLine("Channel found on server: " + e.Guild.Name);
+                //preapre channel
                 ChannelPreparedService.PrepareFreeGamesChannel(channel.First().Value, e.Guild);
             }
             else
             {
                 Console.WriteLine("Channel not found: " + e.Guild.Name);
                 newchannel = e.Guild.CreateChannelAsync("free-games", ChannelType.Text).Result;
+                //prepare channel
                 ChannelPreparedService.PrepareFreeGamesChannel(newchannel, e.Guild);
             }
 
@@ -48,12 +55,14 @@ namespace DCBotApi
             if (newchannel == null)
             {
                 scraped = new GamerPowerScraper();
+                //update channel with all scraped data from webpage
                 ChannelUpdateService.UpdateFreeGamesChannel(channel.First().Value, e.Guild, scraped.ExtractedData);
                 return channel.First().Value.Id;
             }
             else
             {
                 scraped = new GamerPowerScraper();
+                //update channel with all scraped data from webpage
                 ChannelUpdateService.UpdateFreeGamesChannel(newchannel, e.Guild, scraped.ExtractedData);
                 return newchannel.Id;
             }
@@ -65,9 +74,15 @@ namespace DCBotApi
             if (e.Guild.Name != "Testowy Server dla bota") return;
 #endif
             Console.WriteLine("Server: " + e.Guild.Name);
+            //get all channel on server 
             var channels = e.Guild.Channels;
             DiscordChannel Channel = null;
+            //retreview channel id saved in config file 
             ulong channelid = ConfigMenager.GetChannelID(e.Guild.Id, ChannelEnum.FGChannel);
+            //check if channel with CHANNELID exist on server
+            //if not create new channel with name "free-games"
+            //save channel id to config file
+            //prepare channel
             if ((Channel = channels.Where(x => x.Key == channelid).FirstOrDefault().Value) != null)
             {
                 Console.WriteLine("Channel found on server: " + e.Guild.Name);
@@ -83,6 +98,7 @@ namespace DCBotApi
             Console.WriteLine();
 
             GamerPowerScraper scraped = new GamerPowerScraper();
+            //update channel with data
             ChannelUpdateService.UpdateFreeGamesChannel(Channel, e.Guild, scraped.ExtractedData);
             return;
         }
