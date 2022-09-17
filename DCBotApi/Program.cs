@@ -7,6 +7,7 @@ using DSharpPlus.CommandsNext;
 using DCBotApi.commands;
 using DCBotApi.Configuration;
 using DCBotApi.Sources.Games;
+using DCBotApi.Language;
 
 namespace DCBotApi
 {
@@ -28,6 +29,8 @@ namespace DCBotApi
             //create folder for configs
             if (!Directory.Exists(DCBotApi.Utility.Directory.GetPath("Configs")))
                 Directory.CreateDirectory(DCBotApi.Utility.Directory.GetPath("Configs"));
+
+            LanguageMenager.LoadLanguages();
 
             DiscordClient = new DiscordClient(new DiscordConfiguration()
             {
@@ -118,6 +121,8 @@ namespace DCBotApi
             commands.RegisterCommands<SetFGChannel>();
             commands.RegisterCommands<RecreateChannelFG>();
             commands.RegisterCommands<DisplayAdmin>();
+            commands.RegisterCommands<SetLanguage>();
+            commands.RegisterCommands<UpdateConfig>();
         }
     }
 }

@@ -21,7 +21,9 @@ namespace DCBotApi.commands
 
             Console.WriteLine("Channel free games id has been updated on: " + ctx.Guild.Name);
 
-            await ctx.RespondAsync($"Kanał ustawiony");
+            await ctx.RespondAsync(Language.LanguageMenager.GetLang(
+                ConfigMenager.GetLanguage(ctx.Guild.Id))
+                .CommandResponses[ctx.Command.Name.ToLower()]);
         }
     }
 }

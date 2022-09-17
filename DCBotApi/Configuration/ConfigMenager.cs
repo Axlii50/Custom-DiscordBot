@@ -39,6 +39,15 @@ namespace DCBotApi.Configuration
             Console.WriteLine($"Config file: \n {ConfigPath} \n {id}");
         }
 
+        public static void UpdateConfig(ulong serverId)
+        {
+            string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
+            string configtext = File.ReadAllText(ConfigPath);
+            Config config = JsonConvert.DeserializeObject<Config>(configtext);
+            File.WriteAllText(ConfigPath,
+                JsonConvert.SerializeObject(config,Formatting.Indented));
+        }
+
         //rewrite this all SET/GET functions to few universal for all of them
 
         /// <summary>
@@ -85,7 +94,11 @@ namespace DCBotApi.Configuration
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serverId"></param>
+        /// <param name="numberofticks"></param>
         public static void SetIntervalTicks(ulong serverId, int numberofticks)
         {
             string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
@@ -134,6 +147,31 @@ namespace DCBotApi.Configuration
 
             Config config = JsonConvert.DeserializeObject<Config>(configtext);
             return config.CurrentTicks;
+        }
+
+
+        public static void SetLanguage(ulong serverId, Language.LangTypes type)
+        {
+            string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
+            string[] lines = File.ReadAllLines(ConfigPath);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].Contains("Lang"))
+                {
+                    lines[i] = string.Format(@"  ""{0}"": {1},", "Lang", (int)type);
+                    break;
+                }
+            }
+            File.WriteAllLines(ConfigPath, lines);
+        }
+
+        public static Language.LangTypes GetLanguage(ulong serverId)
+        {
+            string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
+            string configtext = File.ReadAllText(ConfigPath);
+
+            Config config = JsonConvert.DeserializeObject<Config>(configtext);
+            return config.Lang;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DCBotApi.Language;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace DCBotApi.Configuration
 {
-
     class Config
     {
         public Config(ulong serverid) => this.ServerId = serverid;
@@ -31,7 +31,9 @@ namespace DCBotApi.Configuration
         /// </summary>
         public int CurrentTicks { get; set; } = 0;
 
-        
-
+        /// <summary>
+        /// language in what responses are send 
+        /// </summary>
+        public LangTypes Lang { get; set; } = LangTypes.English;
     }
 }

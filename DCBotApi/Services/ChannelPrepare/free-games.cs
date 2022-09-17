@@ -1,4 +1,5 @@
-﻿using DSharpPlus.Entities;
+﻿using DCBotApi.Language;
+using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 using System;
@@ -45,7 +46,9 @@ namespace DCBotApi.Services.ChannelPrepare
         {
             DiscordMessageBuilder message = new DiscordMessageBuilder();
 
-            message.Content = "Ustawienia dla kanału:\n"
+            LanguageObject lang = LanguageMenager.GetLang(Configuration.ConfigMenager.GetLanguage(server.Id));
+
+            message.Content = $"{lang.FGfilltersMessage}\n"
                 + ":one: - PC\n"
                 + ":two: - Steam\n"
                 + ":three: - Epic\n"

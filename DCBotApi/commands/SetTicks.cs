@@ -19,7 +19,9 @@ namespace DCBotApi.commands
 
             ConfigMenager.SetTicks(ctx.Guild.Id, AmountOfTicks);
 
-            await ctx.RespondAsync($"Amount of current ticks per update is: " + AmountOfTicks);
+            await ctx.RespondAsync(Language.LanguageMenager.GetLang(
+                ConfigMenager.GetLanguage(ctx.Guild.Id))
+                .CommandResponses[ctx.Command.Name.ToLower()] + AmountOfTicks);
         }
     }
 }

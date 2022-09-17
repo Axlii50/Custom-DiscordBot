@@ -19,7 +19,9 @@ namespace DCBotApi.commands
 
             Configuration.ConfigMenager.SetChannelId(ctx.Guild.Id, ChannelId, ChannelEnum.MainChannel);
 
-            await ctx.RespondAsync($"Kanał ustawiony");
+            await ctx.RespondAsync(Language.LanguageMenager.GetLang(
+                ConfigMenager.GetLanguage(ctx.Guild.Id))
+                .CommandResponses[ctx.Command.Name.ToLower()]);
         }
     }
 }

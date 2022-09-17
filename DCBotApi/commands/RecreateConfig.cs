@@ -24,7 +24,9 @@ namespace DCBotApi.commands
 
             ConfigMenager.CreateConfig(ctx.Guild.Id);
 
-            await ctx.RespondAsync($"Creationg of configuration file is finished");
+            await ctx.RespondAsync(Language.LanguageMenager.GetLang(
+                ConfigMenager.GetLanguage(ctx.Guild.Id))
+                .CommandResponses[ctx.Command.Name.ToLower()]);
         }
     }
 }

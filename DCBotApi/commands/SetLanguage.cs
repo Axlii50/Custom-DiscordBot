@@ -12,9 +12,9 @@ namespace DCBotApi.commands
     internal class SetLanguage : BaseCommandModule
     {
         [Command("SetLanguage")]
-        public async Task SetLanguageCommand(CommandContext ctx,Language.LangTypes type)
+        public async Task SetLanguageCommand(CommandContext ctx, string type)
         {
-            Configuration.ConfigMenager.SetLanguage(ctx.Guild.Id, type);
+            Configuration.ConfigMenager.SetLanguage(ctx.Guild.Id, (Language.LangTypes)Enum.Parse(typeof(Language.LangTypes),type));
 
             await ctx.RespondAsync(Language.LanguageMenager.GetLang(
                 ConfigMenager.GetLanguage(ctx.Guild.Id))
