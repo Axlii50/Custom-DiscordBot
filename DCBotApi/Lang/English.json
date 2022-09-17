@@ -1,0 +1,21 @@
+{
+  "type": 1,
+  "FGfilltersMessage": null,
+  "HelpCommandsDescription": {
+    "help": "display all commands",
+    "recreatefgchannel": "change channel for free games updates (ADMIN)",
+    "recreateconfig": "recreates configuration file (ADMIN)",
+    "setfgchannel": "change channel for free games updates (ADMIN)",
+    "setmainchannel": "set main channel id for bot (ADMIN)",
+    "setticks": "defualt number of ticks is 6 (10 min per tick)"
+  },
+  "CommandResponses": {
+    "recreatefgchannel": "channel free games has been created",
+    "recreateconfig": "Creationg of configuration file is finished",
+    "setfgchannel": "Channel set",
+    "setmainchannel": "Channel set",
+    "setticks": "Amount of current ticks per update is:",
+    "setlanguage": "Language set",
+    "updateconfig": "Config updated"
+  }
+}
