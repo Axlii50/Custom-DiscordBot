@@ -16,6 +16,7 @@
     "setmainchannel": "Kanał ustawiony",
     "setticks": "Aktualna ilosc ticków na jedno odświeżenie wynosi:",
     "setlanguage": "Język Zmieniony",
-    "updateconfig": "Plik konfiguracyjny odświeżony"
+    "updateconfig": "Plik konfiguracyjny odświeżony",
+    "languages": "Dostepne języki: \n"
   }
 }

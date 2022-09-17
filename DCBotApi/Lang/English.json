@@ -16,6 +16,7 @@
     "setmainchannel": "Channel set",
     "setticks": "Amount of current ticks per update is:",
     "setlanguage": "Language set",
-    "updateconfig": "Config updated"
+    "updateconfig": "Config updated",
+    "languages": "Available languages: \n"
   }
 }
