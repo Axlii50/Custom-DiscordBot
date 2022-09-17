@@ -8,6 +8,7 @@ using DCBotApi.commands;
 using DCBotApi.Configuration;
 using DCBotApi.Sources.Games;
 using DCBotApi.Language;
+using System.Reflection;
 
 namespace DCBotApi
 {
@@ -115,14 +116,14 @@ namespace DCBotApi
 
         private static void RegisterCommands(CommandsNextExtension commands)
         {
-            commands.RegisterCommands<Help>();
-            commands.RegisterCommands<ReCreateConfig>();
-            commands.RegisterCommands<SetMainChannel>();
-            commands.RegisterCommands<SetFGChannel>();
-            commands.RegisterCommands<RecreateChannelFG>();
-            commands.RegisterCommands<DisplayAdmin>();
-            commands.RegisterCommands<SetLanguage>();
-            commands.RegisterCommands<UpdateConfig>();
+            string namespacestring = "DCBotApi.commands";
+
+            var types = Assembly.GetExecutingAssembly().GetTypes()
+                        .Where(t => t.IsClass && t.Namespace == namespacestring)
+                        .ToList();
+
+            foreach(Type x in types)
+                commands.RegisterCommands(x);
         }
     }
 }
