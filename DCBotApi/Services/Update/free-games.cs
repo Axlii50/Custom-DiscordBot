@@ -78,7 +78,7 @@ namespace DCBotApi.Services.ChannelPrepare
             //remove expired games
             foreach (var message in messages)
             {
-                if (message.Content.StartsWith("Ustawienia")) continue;
+                if (message == messages.Last()) continue;
 
                 if (!games.Any(x => x.Name == message.Embeds.FirstOrDefault()?.Title))
                 {
