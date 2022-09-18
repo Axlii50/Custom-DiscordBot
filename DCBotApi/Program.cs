@@ -42,7 +42,7 @@ namespace DCBotApi
 #else
                 MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error
 #endif
-            });;
+            }); ;
 
             var task = Task.Run(async () =>  // <- marked async
             {
@@ -84,7 +84,7 @@ namespace DCBotApi
                 else
                 {
                     Console.WriteLine($"Ticks update for server: {guild.Name}          to: {++ticks}/{Interval}" +
-                        $"\n aproximate time for update: {(Math.Abs(Interval - ticks) * 10)} min" );
+                        $"\n aproximate time for update: {(Math.Abs(Interval - ticks) * 10)} min");
 
                     ConfigMenager.SetTicks(guild.Id, ticks++);
                 }
@@ -105,7 +105,7 @@ namespace DCBotApi
             {
                 StringPrefixes = new[] { "!" },
                 EnableDefaultHelp = false
-            });;
+            }); ;
 
             RegisterCommands(commands);
 
@@ -116,14 +116,7 @@ namespace DCBotApi
 
         private static void RegisterCommands(CommandsNextExtension commands)
         {
-            string namespacestring = "DCBotApi.commands";
-
-            var types = Assembly.GetExecutingAssembly().GetTypes()
-                        .Where(t => t.IsClass && t.Namespace == namespacestring)
-                        .ToList();
-
-            foreach(Type x in types)
-                commands.RegisterCommands(x);
+            commands.RegisterCommands<Commands>();
         }
     }
 }

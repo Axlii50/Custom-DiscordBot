@@ -1,0 +1,25 @@
+{
+  "type": 1,
+  "FGfilltersMessage": null,
+  "HelpCommandsDescription": {
+    "help": "alle Komende zeigen",
+    "recreatefgchannel": "Kanale für free Spiele updates erstellen (ADMIN)",
+    "recreateconfig": "neuerstellung der konfigurations Datei (ADMIN)",
+    "setfgchannel": "Kanale für free Spieleupdates wechseln (ADMIN)",
+    "setmainchannel": "Hauptkanal id für Bot einstellen (ADMIN)",
+    "setticks": "Aus Nummer von 6 (10 min pro lauf) lauf fallen ",
+    "setlanguage": "Sprache wechseln",
+    "updateconfig": "Update konfig",
+    "languages": "Zeigt alle verfügbare Sprachen"
+  },
+  "CommandResponses": {
+    "recreatefgchannel": "Kanal für free Spiele ist eingestanden",
+    "recreateconfig": " Schaffung von Konfigurationdatai ist fertig",
+    "setfgchannel": "Kanal eingestellt",
+    "setmainchannel": "Kanal eingestellt",
+    "setticks": "Nummer von die aktuelle Ticks ist pro update:",
+    "setlanguage": "Sprache einstellen",
+    "updateconfig": "Konfiguration update",
+    "languages": "Erreichene Sprachen: \n"
+  }
+}

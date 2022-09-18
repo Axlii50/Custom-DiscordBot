@@ -9,10 +9,9 @@ using System.Threading.Tasks;
 
 namespace DCBotApi.commands
 {
-    internal class DisplayAdmin : BaseCommandModule
+    partial class Commands : BaseCommandModule
     {
         [Command("DisplayAdmins")]
-        [RequireGuild]
         public async Task DisplayAdminsCommand(CommandContext ctx)
         {
 

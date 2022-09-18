@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DCBotApi.commands
 {
-    internal class ReCreateConfig : BaseCommandModule
+    partial class Commands : BaseCommandModule
     {
         /// <summary>
         /// re creates config file to server where commands is executed

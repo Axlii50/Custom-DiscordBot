@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DCBotApi.commands
 {
-    internal class Languages : BaseCommandModule
+    partial class Commands : BaseCommandModule
     {
         [Command("Languages")]
         public async Task LanguagesCommand(CommandContext ctx)

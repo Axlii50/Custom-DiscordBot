@@ -1,13 +1,16 @@
 {
   "type": 1,
-  "FGfilltersMessage": null,
+  "FGfilltersMessage": "Channel filters",
   "HelpCommandsDescription": {
     "help": "display all commands",
     "recreatefgchannel": "change channel for free games updates (ADMIN)",
     "recreateconfig": "recreates configuration file (ADMIN)",
-    "setfgchannel": "change channel for free games updates (ADMIN)",
+    "setfgchannel": "Set channel for free games updates (ADMIN)",
     "setmainchannel": "set main channel id for bot (ADMIN)",
-    "setticks": "defualt number of ticks is 6 (10 min per tick)"
+    "setticks": "defualt number of ticks is 6 (10 min per tick)",
+    "setlanguage": "Change language",
+    "updateconfig": "Update config",
+    "languages": "Display all avialable languages"
   },
   "CommandResponses": {
     "recreatefgchannel": "channel free games has been created",

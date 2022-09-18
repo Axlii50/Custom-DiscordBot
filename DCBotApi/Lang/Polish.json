@@ -1,13 +1,16 @@
 {
   "type": 0,
-  "FGfilltersMessage": null,
+  "FGfilltersMessage": "Filtry kanału",
   "HelpCommandsDescription": {
     "help": "Wyswietla wszystkie komendy",
     "recreatefgchannel": "stwórz na nowo kanał odpowiedzialny za darmowe gry (ADMIN)",
     "recreateconfig": "Stwórz na nowo plik konfiguracyjny (ADMIN)",
     "setfgchannel": "Ustaw kanał odpowiedzialny za darmowe gry (ADMIN)",
     "setmainchannel": "Ustaw kanał odpowiedzialny za główny kanał (ADMIN)",
-    "setticks": "Ustaw ilosc ticków na odswieżenie (10min na tick)"
+    "setticks": "Ustaw ilosc ticków na odswieżenie (10min na tick)",
+    "setlanguage": "Ustaw jezyk",
+    "updateconfig": "Odśwież plik konfiguracyjny",
+    "languages": "wyświetl dostępne języki"
   },
   "CommandResponses": {
     "recreatefgchannel": "Kanał darmowe gry został stworzony",

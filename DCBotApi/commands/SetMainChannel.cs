@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DCBotApi.commands
 {
-    internal class SetMainChannel : BaseCommandModule
+    partial class Commands : BaseCommandModule
     {
         [Command("SetMainChannel")]
         [RequireGuild]

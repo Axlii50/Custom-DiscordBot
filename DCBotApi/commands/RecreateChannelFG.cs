@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DCBotApi.commands
 {
-    internal class RecreateChannelFG : BaseCommandModule
+    partial class Commands : BaseCommandModule
     {
         [Command("RecreateFGChannel")]
         [RequireGuild]

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DCBotApi.commands
 {
-    internal class UpdateConfig : BaseCommandModule
+    partial class Commands : BaseCommandModule
     {
         /// <summary>
         /// display all avaiable commands
