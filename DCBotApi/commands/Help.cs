@@ -24,13 +24,10 @@ namespace DCBotApi.commands
 
             discordEmbedBuilder.Title = "Commands";
 
-            foreach (KeyValuePair<string, string> x in
-                Language.LanguageManager.GetLang(
-                    Configuration.ConfigMenager.GetLanguage(ctx.Guild.Id))
-                .HelpCommandsDescription)
+            foreach (KeyValuePair<string, string> x in Language.LanguageManager.GetLang(
+                    Configuration.ConfigMenager.GetLanguage(ctx.Guild.Id)).HelpCommandsDescription)
             {
-                discordEmbedBuilder.Description = $"{x.Key}: {x.Value} \n";
-                
+                discordEmbedBuilder.Description += $"{x.Key}: {x.Value} \n";
             }
             discordEmbedBuilder.Build();
             discordMessageBuilder.AddEmbed(discordEmbedBuilder.Build());

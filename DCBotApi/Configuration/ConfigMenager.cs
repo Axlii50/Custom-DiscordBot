@@ -21,7 +21,7 @@ namespace DCBotApi.Configuration
             config.FGChannelID = freegameschannelID;
             PrepareConfigFile(id);
 
-            string configjson = JsonConvert.SerializeObject(config,Formatting.Indented);
+            string configjson = JsonConvert.SerializeObject(config, Formatting.Indented);
 
             File.WriteAllText(DCBotApi.Utility.Directory.GetPath($"Configs\\{id}.txt"), configjson);
         }
@@ -45,7 +45,7 @@ namespace DCBotApi.Configuration
             string configtext = File.ReadAllText(ConfigPath);
             Config config = JsonConvert.DeserializeObject<Config>(configtext);
             File.WriteAllText(ConfigPath,
-                JsonConvert.SerializeObject(config,Formatting.Indented));
+                JsonConvert.SerializeObject(config, Formatting.Indented));
         }
 
         //rewrite this all SET/GET functions to few universal for all of them
@@ -61,11 +61,11 @@ namespace DCBotApi.Configuration
             string ChannelName = channel.ToString() + "ID";
             string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
             string[] lines = File.ReadAllLines(ConfigPath);
-            for(int i = 0; i<lines.Length;i++)
+            for (int i = 0; i < lines.Length; i++)
             {
                 if (lines[i].Contains(ChannelName))
                 {
-                    lines[i] = string.Format(@"  ""{0}"": {1},",ChannelName,channelid);
+                    lines[i] = string.Format(@"  ""{0}"": {1},", ChannelName, channelid);
                     break;
                 }
             }
@@ -114,7 +114,11 @@ namespace DCBotApi.Configuration
             File.WriteAllLines(ConfigPath, lines);
         }
 
-
+        /// <summary>
+        /// return amount of ticks for a given server ID
+        /// </summary>
+        /// <param name="serverId">server id</param>
+        /// <returns></returns>
         public static int GetIntervalTicks(ulong serverId)
         {
             string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
