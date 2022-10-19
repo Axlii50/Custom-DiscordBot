@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace DCBotApi.Configuration
 {
-    internal class ConfigMenager
+    internal class ConfigManager
     {
         /// <summary>
-        /// create config for given server ID with/without free gamess channel id
+        /// create a config for a given server ID with/without free games channel id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="freegameschannelID"></param>
@@ -27,7 +27,7 @@ namespace DCBotApi.Configuration
         }
 
         /// <summary>
-        /// create config file in specific path and specific name that coresponds a ID of server
+        /// create a config file in a specific path and specific name that coresponds to an ID of a server
         /// </summary>
         /// <param name="id"></param>
         private static void PrepareConfigFile(ulong id)
@@ -48,10 +48,10 @@ namespace DCBotApi.Configuration
                 JsonConvert.SerializeObject(config,Formatting.Indented));
         }
 
-        //rewrite this all SET/GET functions to few universal for all of them
+        //TODO rewrite all SET/GET functions to a universal for all of them
 
         /// <summary>
-        /// for given type of channel set its ID in config file for given id of server
+        /// for a given type of channel, set its ID in its config file
         /// </summary>
         /// <param name="serverId"></param>
         /// <param name="channelid"></param>
@@ -73,7 +73,7 @@ namespace DCBotApi.Configuration
         }
 
         /// <summary>
-        /// get channel id of specific type for specific server ids
+        /// get channel id of the specific type for specific server ids
         /// </summary>
         /// <param name="serverId"></param>
         /// <param name="channel"></param>

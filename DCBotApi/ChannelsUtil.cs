@@ -11,7 +11,7 @@ namespace DCBotApi
     internal class ChannelsUtil
     {
         /// <summary>
-        /// send list of messages to specififc channel
+        /// send a list of messages to a specififc channel
         /// </summary>
         /// <param name="messages"></param>
         /// <param name="channel"></param>
@@ -22,7 +22,7 @@ namespace DCBotApi
         }
 
         /// <summary>
-        /// send one message to specific channel
+        /// send one message to a specific channel
         /// </summary>
         /// <param name="message"></param>
         /// <param name="channel"></param>
@@ -39,7 +39,7 @@ namespace DCBotApi
         }
 
         /// <summary>
-        /// given send message to specific channel 
+        /// send given message to a specific channel 
         /// </summary>
         /// <param name="message"></param>
         /// <param name="channel"></param>
@@ -75,7 +75,7 @@ namespace DCBotApi
         }
 
         /// <summary>
-        /// delete all messages on given channel eache message separetle 
+        /// delete all messages on a given channel one by one
         /// </summary>
         /// <param name="channel"></param>
         private async static void ClearChannelOneByOne(DiscordChannel channel)
@@ -87,7 +87,7 @@ namespace DCBotApi
         }
 
         /// <summary>
-        /// retreview all messages from given channel 
+        /// retrieve all messages from a given channel 
         /// </summary>
         /// <param name="channel"></param>
         /// <returns></returns>
@@ -97,7 +97,7 @@ namespace DCBotApi
         }
 
         /// <summary>
-        /// remove given message from given channel 
+        /// remove given message from a given channel 
         /// </summary>
         /// <param name="message"></param>
         /// <param name="channel"></param>

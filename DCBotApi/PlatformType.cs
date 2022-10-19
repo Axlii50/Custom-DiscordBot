@@ -20,8 +20,8 @@ namespace DCBotApi
     {
         /// <summary>
         /// custom GetEnumarator for PlatformType enum 
-        /// this allows to simply use foreach without writing some function to return list of all types that are contained inside of type
-        /// and just use variable as list for iterating
+        /// this allows to simply use foreach without writing a function to return the list of all types that are contained inside of type
+        /// and just use a variable as a list for iterating
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>

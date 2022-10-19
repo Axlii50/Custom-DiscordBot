@@ -54,7 +54,7 @@ namespace DCBotApi.Services.ChannelPrepare
             {
                 if (!messages.Any(x => x.Embeds.FirstOrDefault()?.Title == game.Name))
                 {
-                    //if any platform match with settings it will display
+                    //if any platform matches with the settings it will display them
                     bool add = false;
                     if (!settings.HasFlag(PlatformType.All))
                     {

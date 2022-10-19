@@ -35,7 +35,7 @@ namespace DCBotApi.Sources.Games
 
             html.LoadHtml(response);
 
-            //get all containers with informations
+            //get all containers with information
             List<HtmlNode> nodes =
                   html.DocumentNode.Descendants(0)
                      .Where(n => n.HasClass("col-xl-3")
@@ -53,7 +53,7 @@ namespace DCBotApi.Sources.Games
                 if (!c.Contains("expire_stamp")) Inner.Add(c);
             }
 
-            //proccess all left nodes 
+            //process all left nodes 
             foreach (string x in Inner)
             {
                 var temp = ExtractData(x);
@@ -80,12 +80,12 @@ namespace DCBotApi.Sources.Games
 
             if (GameName == null) return null;
 
-            //get image url for displaying
+            //get game thumbnail
             string ImageURL = "https://www.gamerpower.com" + html.DocumentNode.Descendants()
                 .Where(x => x.HasClass("card-img-top") && x.HasClass("thumbnail")).FirstOrDefault()?.Attributes["src"].Value;
 
-            //i think it can be optimized but for now its just works
-            //get URL for this item
+            //i think this can be optimized but for now it just works
+            //get URL for given item
             var URlNode = html.DocumentNode.Descendants()
                 .Where((x) =>
                 x.HasClass("card")
@@ -111,8 +111,8 @@ namespace DCBotApi.Sources.Games
             if (node.Contains("Windows PC")) _game.type |= PlatformType.PC;
             if (node.Contains("Xbox Store")) _game.type |= PlatformType.XBOXONE;
 
-            //probabilit that not always will detect in node
-            //beacause there is no tag on page so only option (for now that i can think of) is just checking if in description appears "Epic games"
+            //there's a probability that it won't always detect in node
+            //because there is no tag on the page, so the only option (for now that i can think of) is just to check if "Epic games" appears in the description 
             if (node.Contains("Epic Games")) _game.type |= PlatformType.EPIC;
 
             return _game;

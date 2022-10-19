@@ -17,10 +17,10 @@ namespace DCBotApi.commands
         {
             if (!Admins.AdminsID.Contains(ctx.Member.Id)) return;
 
-            Configuration.ConfigMenager.SetChannelId(ctx.Guild.Id, ChannelId, ChannelEnum.MainChannel);
+            Configuration.ConfigManager.SetChannelId(ctx.Guild.Id, ChannelId, ChannelEnum.MainChannel);
 
-            await ctx.RespondAsync(Language.LanguageMenager.GetLang(
-                ConfigMenager.GetLanguage(ctx.Guild.Id))
+            await ctx.RespondAsync(Language.LanguageManager.GetLang(
+                ConfigManager.GetLanguage(ctx.Guild.Id))
                 .CommandResponses[ctx.Command.Name.ToLower()]);
         }
     }

@@ -22,7 +22,7 @@ namespace DCBotApi
             ulong FreeGamesChannelID = Freegameschannel(e);
 
             //create config file with server id and channel id 
-            ConfigMenager.CreateConfig(e.Guild.Id, FreeGamesChannelID);
+            ConfigManager.CreateConfig(e.Guild.Id, FreeGamesChannelID);
 
             return null;
         }
@@ -35,8 +35,8 @@ namespace DCBotApi
 
             IEnumerable<KeyValuePair<ulong, DSharpPlus.Entities.DiscordChannel>> channel;
 
-            //check if there is channel with name "free games"
-            //if there is non of such channel then create new and save id 
+            //check if there is a channel with a name "free games"
+            //if there is no such channel, create one and save its id 
             if ((channel = channels.Where(x => x.Value.Name == "free-games")).Count() > 0)
             {
                 Console.WriteLine("Channel found on server: " + e.Guild.Name);
@@ -77,9 +77,9 @@ namespace DCBotApi
             //get all channel on server 
             var channels = e.Guild.Channels;
             DiscordChannel Channel = null;
-            //retreview channel id saved in config file 
-            ulong channelid = ConfigMenager.GetChannelID(e.Guild.Id, ChannelEnum.FGChannel);
-            //check if channel with CHANNELID exist on server
+            //retrieve channel id saved in config file 
+            ulong channelid = ConfigManager.GetChannelID(e.Guild.Id, ChannelEnum.FGChannel);
+            //check if channel with CHANNELID exist on the server
             //if not create new channel with name "free-games"
             //save channel id to config file
             //prepare channel
@@ -92,7 +92,7 @@ namespace DCBotApi
                 Console.WriteLine("Channel not found: " + e.Guild.Name);
                 Channel = await e.Guild.CreateChannelAsync("free-games", ChannelType.Text);
                 Console.WriteLine(e.Guild.Name + ": Channel Created");
-                ConfigMenager.SetChannelId(e.Guild.Id, Channel.Id, ChannelEnum.FGChannel);
+                ConfigManager.SetChannelId(e.Guild.Id, Channel.Id, ChannelEnum.FGChannel);
                 ChannelPreparedService.PrepareFreeGamesChannel(Channel, e.Guild);
             }
             Console.WriteLine();

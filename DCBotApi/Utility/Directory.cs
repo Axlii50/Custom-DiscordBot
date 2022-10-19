@@ -10,7 +10,7 @@ namespace DCBotApi.Utility
     internal class Directory
     {
         /// <summary>
-        /// Return given path with full as full path not as part
+        /// don't touch, it just works
         /// </summary>
         /// <param name="PathAdd"></param>
         /// <returns></returns>

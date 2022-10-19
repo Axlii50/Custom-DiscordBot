@@ -24,10 +24,10 @@ namespace DCBotApi.commands
 
             ChannelPreparedService.PrepareFreeGamesChannel(Channel, ctx.Guild);
 
-            ConfigMenager.SetChannelId(ctx.Guild.Id, Channel.Id, ChannelEnum.FGChannel);
+            ConfigManager.SetChannelId(ctx.Guild.Id, Channel.Id, ChannelEnum.FGChannel);
 
-            await ctx.RespondAsync(Language.LanguageMenager.GetLang(
-                ConfigMenager.GetLanguage(ctx.Guild.Id))
+            await ctx.RespondAsync(Language.LanguageManager.GetLang(
+                ConfigManager.GetLanguage(ctx.Guild.Id))
                 .CommandResponses[ctx.Command.Name.ToLower()]);
         }
     }

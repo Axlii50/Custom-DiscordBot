@@ -14,10 +14,10 @@ namespace DCBotApi.commands
         [Command("SetLanguage")]
         public async Task SetLanguageCommand(CommandContext ctx, string type)
         {
-            Configuration.ConfigMenager.SetLanguage(ctx.Guild.Id, (Language.LangTypes)Enum.Parse(typeof(Language.LangTypes),type));
+            Configuration.ConfigManager.SetLanguage(ctx.Guild.Id, (Language.LangTypes)Enum.Parse(typeof(Language.LangTypes),type));
 
-            await ctx.RespondAsync(Language.LanguageMenager.GetLang(
-                ConfigMenager.GetLanguage(ctx.Guild.Id))
+            await ctx.RespondAsync(Language.LanguageManager.GetLang(
+                ConfigManager.GetLanguage(ctx.Guild.Id))
                 .CommandResponses[ctx.Command.Name.ToLower()]);
         }
     }

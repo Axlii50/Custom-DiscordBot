@@ -10,7 +10,7 @@ namespace DCBotApi.Configuration
     class Config
     {
         public Config(ulong serverid) => this.ServerId = serverid;
-
+       
         public ulong ServerId { get; private set; }
         
         /// <summary>
@@ -20,19 +20,19 @@ namespace DCBotApi.Configuration
         public ulong MainChannelID { get; set; } = 0;
 
         /// <summary>
-        /// one ticks occure once 10 min 
-        /// deafult server will update once an hour
+        /// one ticks occures every 10 min 
+        /// default server will update once per hour
         /// </summary>
         public int CustomNumberOfticks { get; set; } = 6;
 
         /// <summary>
-        /// represent how many ticks have passed 
-        /// update occures when currents ticks is equal to custom number of ticks 
+        /// represents how many ticks have passed 
+        /// update occures when current tick is equal to a custom amount of ticks 
         /// </summary>
         public int CurrentTicks { get; set; } = 0;
 
         /// <summary>
-        /// language in what responses are send 
+        /// language in what the responses are send 
         /// </summary>
         public LangTypes Lang { get; set; } = LangTypes.English;
     }

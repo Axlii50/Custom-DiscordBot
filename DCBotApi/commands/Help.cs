@@ -25,11 +25,11 @@ namespace DCBotApi.commands
             discordEmbedBuilder.Title = "Commands";
 
             foreach (KeyValuePair<string, string> x in
-                Language.LanguageMenager.GetLang(
-                    Configuration.ConfigMenager.GetLanguage(ctx.Guild.Id))
+                Language.LanguageManager.GetLang(
+                    Configuration.ConfigManager.GetLanguage(ctx.Guild.Id))
                 .HelpCommandsDescription)
             {
-                discordEmbedBuilder.Description = $"{x.Key}: {x.Value} \n";
+                discordEmbedBuilder.Description += $"{x.Key}: {x.Value} \n";
                 
             }
             discordEmbedBuilder.Build();

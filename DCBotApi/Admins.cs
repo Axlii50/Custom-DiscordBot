@@ -9,12 +9,13 @@ namespace DCBotApi
     internal class Admins
     {
         /// <summary>
-        /// list of clients id that are considered as admins for specific commands 
+        /// list of client ids that are considered admins for specific commands 
         /// </summary>
         public static ulong[] AdminsID =
         {
             251724220617326592, //Axlii50
-            345974411108548608  //Imper7
+            345974411108548608, //Imper7
+            400772974220935178  //Rekushia
         };
     }
 }

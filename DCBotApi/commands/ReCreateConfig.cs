@@ -12,7 +12,7 @@ namespace DCBotApi.commands
     partial class Commands : BaseCommandModule
     {
         /// <summary>
-        /// re creates config file to server where commands is executed
+        /// recreates config file to server
         /// </summary>
         /// <param name="ctx"></param>
         /// <returns></returns>
@@ -22,10 +22,10 @@ namespace DCBotApi.commands
         {
             if (!Admins.AdminsID.Contains(ctx.Member.Id)) return;
 
-            ConfigMenager.CreateConfig(ctx.Guild.Id);
+            ConfigManager.CreateConfig(ctx.Guild.Id);
 
-            await ctx.RespondAsync(Language.LanguageMenager.GetLang(
-                ConfigMenager.GetLanguage(ctx.Guild.Id))
+            await ctx.RespondAsync(Language.LanguageManager.GetLang(
+                ConfigManager.GetLanguage(ctx.Guild.Id))
                 .CommandResponses[ctx.Command.Name.ToLower()]);
         }
     }

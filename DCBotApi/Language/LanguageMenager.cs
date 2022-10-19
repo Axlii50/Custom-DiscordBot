@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DCBotApi.Language
 {
-    internal static class LanguageMenager
+    internal static class LanguageManager
     {
         private static List<LanguageObject> Langs { get; set; }
 
@@ -23,7 +23,7 @@ namespace DCBotApi.Language
             //load all aviable languages
             Langs = new List<LanguageObject>();
             foreach (var x in (LangTypes[])Enum.GetValues(typeof(LangTypes)))
-                Langs.Add(LanguageMenager.LoadLang(x));
+                Langs.Add(LanguageManager.LoadLang(x));
         }
 
         public static LanguageObject GetLang(LangTypes type)

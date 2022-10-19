@@ -19,8 +19,8 @@ namespace DCBotApi.commands
             foreach (var x in (LangTypes[])Enum.GetValues(typeof(LangTypes)))
                 Langs += x.ToString() + "\n";
 
-            await ctx.RespondAsync(Language.LanguageMenager.GetLang(
-               ConfigMenager.GetLanguage(ctx.Guild.Id))
+            await ctx.RespondAsync(Language.LanguageManager.GetLang(
+               ConfigManager.GetLanguage(ctx.Guild.Id))
                .CommandResponses[ctx.Command.Name.ToLower()] + Langs);
 
         }

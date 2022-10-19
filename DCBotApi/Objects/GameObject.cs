@@ -19,12 +19,12 @@ namespace DCBotApi.Objects
         public string Name;
 
         /// <summary>
-        /// URL for image of the game
+        /// URL for game thumbnail
         /// </summary>
         public string ImageURL;
 
         /// <summary>
-        /// URL for site with instructions and descriptions 
+        /// URL for the site with instructions and descriptions 
         /// </summary>
         public string RedirectURL;
     }

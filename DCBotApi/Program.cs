@@ -27,11 +27,11 @@ namespace DCBotApi
 
         static void Main(string[] args)
         {
-            //create folder for configs
+            //create configs folder
             if (!Directory.Exists(DCBotApi.Utility.Directory.GetPath("Configs")))
                 Directory.CreateDirectory(DCBotApi.Utility.Directory.GetPath("Configs"));
 
-            LanguageMenager.LoadLanguages();
+            LanguageManager.LoadLanguages();
 
             DiscordClient = new DiscordClient(new DiscordConfiguration()
             {
@@ -48,7 +48,7 @@ namespace DCBotApi
             {
                 while (true)
                 {
-                    await Task.Delay(intervaltime); // <- await with cancellation
+                    await Task.Delay(intervaltime); // <- await with cancelation
                     Console.WriteLine("Updating servers...");
                     Update();
                 }
@@ -67,10 +67,10 @@ namespace DCBotApi
 #endif
                 int ticks = 0;
                 int Interval = 0;
-                if ((ticks = ConfigMenager.GetTicks(guild.Id)) == (Interval = ConfigMenager.GetIntervalTicks(guild.Id)) - 1)
+                if ((ticks = ConfigManager.GetTicks(guild.Id)) == (Interval = ConfigManager.GetIntervalTicks(guild.Id)) - 1)
                 {
                     Console.WriteLine("Updating Server: " + guild.Name + "\n");
-                    ulong channelid = ConfigMenager.GetChannelID(guild.Id, ChannelEnum.FGChannel);
+                    ulong channelid = ConfigManager.GetChannelID(guild.Id, ChannelEnum.FGChannel);
                     DiscordChannel channel = guild.Channels.Where(x => x.Key == channelid).FirstOrDefault().Value;
                     if (channel == null)
                     {
@@ -79,14 +79,14 @@ namespace DCBotApi
                     }
                     ChannelUpdateService.UpdateFreeGamesChannel(channel, guild, scrapper.ExtractedData);
 
-                    ConfigMenager.SetTicks(guild.Id, 0);
+                    ConfigManager.SetTicks(guild.Id, 0);
                 }
                 else
                 {
                     Console.WriteLine($"Ticks update for server: {guild.Name}          to: {++ticks}/{Interval}" +
                         $"\n aproximate time for update: {(Math.Abs(Interval - ticks) * 10)} min");
 
-                    ConfigMenager.SetTicks(guild.Id, ticks++);
+                    ConfigManager.SetTicks(guild.Id, ticks++);
                 }
             }
         }
@@ -100,10 +100,10 @@ namespace DCBotApi
             {
                 PollBehaviour = DSharpPlus.Interactivity.Enums.PollBehaviour.KeepEmojis,
             });
-
+            
             var commands = DiscordClient.UseCommandsNext(new CommandsNextConfiguration()
             {
-                StringPrefixes = new[] { "!" },
+                StringPrefixes = new[] { "!p " },
                 EnableDefaultHelp = false
             }); ;
 

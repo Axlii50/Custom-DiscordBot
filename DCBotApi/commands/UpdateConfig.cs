@@ -21,10 +21,10 @@ namespace DCBotApi.commands
         {
             if (!Admins.AdminsID.Contains(ctx.Member.Id)) return;
 
-            Configuration.ConfigMenager.UpdateConfig(ctx.Guild.Id);
+            Configuration.ConfigManager.UpdateConfig(ctx.Guild.Id);
 
-            await ctx.RespondAsync(Language.LanguageMenager.GetLang(
-               ConfigMenager.GetLanguage(ctx.Guild.Id))
+            await ctx.RespondAsync(Language.LanguageManager.GetLang(
+               ConfigManager.GetLanguage(ctx.Guild.Id))
                .CommandResponses[ctx.Command.Name.ToLower()]);
         }
     }

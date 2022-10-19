@@ -13,7 +13,7 @@
     "languages": "wyświetl dostępne języki"
   },
   "CommandResponses": {
-    "recreatefgchannel": "Kanał darmowe gry został stworzony",
+    "recreatefgchannel": "Kanał **darmowe gry** został stworzony",
     "recreateconfig": "Plik konfiguracyjny został stworzony na nowo",
     "setfgchannel": "Kanał ustawiony",
     "setmainchannel": "Kanał ustawiony",
