@@ -23,7 +23,7 @@ namespace DCBotApi.commands
 
             Configuration.ConfigMenager.UpdateConfig(ctx.Guild.Id);
 
-            await ctx.RespondAsync(Language.LanguageMenager.GetLang(
+            await ctx.RespondAsync(Language.LanguageManager.GetLang(
                ConfigMenager.GetLanguage(ctx.Guild.Id))
                .CommandResponses[ctx.Command.Name.ToLower()]);
         }

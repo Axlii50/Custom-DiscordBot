@@ -25,7 +25,7 @@ namespace DCBotApi.commands
             discordEmbedBuilder.Title = "Commands";
 
             foreach (KeyValuePair<string, string> x in
-                Language.LanguageMenager.GetLang(
+                Language.LanguageManager.GetLang(
                     Configuration.ConfigMenager.GetLanguage(ctx.Guild.Id))
                 .HelpCommandsDescription)
             {

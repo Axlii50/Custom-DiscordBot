@@ -31,7 +31,7 @@ namespace DCBotApi
             if (!Directory.Exists(DCBotApi.Utility.Directory.GetPath("Configs")))
                 Directory.CreateDirectory(DCBotApi.Utility.Directory.GetPath("Configs"));
 
-            LanguageMenager.LoadLanguages();
+            LanguageManager.LoadLanguages();
 
             DiscordClient = new DiscordClient(new DiscordConfiguration()
             {

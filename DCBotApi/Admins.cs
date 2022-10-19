@@ -14,7 +14,8 @@ namespace DCBotApi
         public static ulong[] AdminsID =
         {
             251724220617326592, //Axlii50
-            345974411108548608  //Imper7
+            345974411108548608,  //Imper7
+            400772974220935178  //Rekushia
         };
     }
 }

@@ -19,7 +19,7 @@ namespace DCBotApi.commands
 
             ConfigMenager.SetTicks(ctx.Guild.Id, AmountOfTicks);
 
-            await ctx.RespondAsync(Language.LanguageMenager.GetLang(
+            await ctx.RespondAsync(Language.LanguageManager.GetLang(
                 ConfigMenager.GetLanguage(ctx.Guild.Id))
                 .CommandResponses[ctx.Command.Name.ToLower()] + AmountOfTicks);
         }

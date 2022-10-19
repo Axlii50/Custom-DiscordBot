@@ -46,7 +46,7 @@ namespace DCBotApi.Services.ChannelPrepare
         {
             DiscordMessageBuilder message = new DiscordMessageBuilder();
 
-            LanguageObject lang = LanguageMenager.GetLang(Configuration.ConfigMenager.GetLanguage(server.Id));
+            LanguageObject lang = LanguageManager.GetLang(Configuration.ConfigMenager.GetLanguage(server.Id));
 
             message.Content = $"{lang.FGfilltersMessage}\n"
                 + ":one: - PC\n"
