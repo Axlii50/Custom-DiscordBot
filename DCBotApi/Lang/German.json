@@ -1,6 +1,6 @@
 {
   "type": 1,
-  "FGfilltersMessage": null,
+  "FGfilltersMessage": "Kanal filter",
   "HelpCommandsDescription": {
     "help": "alle Komende zeigen",
     "recreatefgchannel": "Kanale für free Spiele updates erstellen (ADMIN)",

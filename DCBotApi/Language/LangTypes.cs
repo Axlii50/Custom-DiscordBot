@@ -9,6 +9,7 @@ namespace DCBotApi.Language
     internal enum LangTypes
     {
         Polish,
-        English
+        English,
+        German
     }
 }

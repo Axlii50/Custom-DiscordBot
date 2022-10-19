@@ -29,22 +29,13 @@ namespace DCBotApi.commands
                     Configuration.ConfigMenager.GetLanguage(ctx.Guild.Id))
                 .HelpCommandsDescription)
             {
-                discordEmbedBuilder.Title = x.Key;
-                discordEmbedBuilder.Description = x.Value;
-                discordEmbedBuilder.Build();
-                discordMessageBuilder.AddEmbed(discordEmbedBuilder.Build());
+                discordEmbedBuilder.Description = $"{x.Key}: {x.Value} \n";
+                
             }
+            discordEmbedBuilder.Build();
+            discordMessageBuilder.AddEmbed(discordEmbedBuilder.Build());
 
             await ctx.RespondAsync(discordMessageBuilder);
-
-            //TODO change this to embede message for better looking
-            //await ctx.RespondAsync(
-            //    "!Help   display all commands \n" +
-            //    "!ReCreateConfig   recreates configuration file (ADMIN)\n" +
-            //    "!SetMainChannel <ChannelID>   set main channel id for bot (ADMIN) \n" +
-            //    "!SetFGChannel <ChannelID>   change channel for free games updates (ADMIN) \n" +
-            //    "!RecreateChannelFG (ADMIN) \n" +
-            //    "!SetTicks <Number> defualt number of ticks is 6 (10 min per tick)");
         }
     }
 }
