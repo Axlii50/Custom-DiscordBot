@@ -35,7 +35,7 @@ namespace DCBotApi
 
             DiscordClient = new DiscordClient(new DiscordConfiguration()
             {
-                Token = "MTAwOTU0MzkwMDY3NzAzNDE0NQ.GNgiHd.goTNYd1uBysFr429af57VMImklHV2qzFIAWWpw",
+                Token = File.ReadAllText("TokenFile.txt"),
                 TokenType = TokenType.Bot,
 #if DEBUG
                 MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug
