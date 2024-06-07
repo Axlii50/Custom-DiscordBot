@@ -13,7 +13,7 @@ namespace DCBotApi.Services.ChannelPrepare
 {
     static partial class ChannelUpdateService
     {
-        internal static void UpdateFreeGamesChannel(DiscordChannel channel, DiscordGuild server, List<GameObject> ExtractedGames)
+        internal static void UpdateFreeGamesChannel(DiscordChannel channel, DiscordGuild server, List<GiveAway> ExtractedGames)
         {
             Stopwatch timer = new Stopwatch();
             IReadOnlyList<DiscordMessage> messages = null;
@@ -42,7 +42,7 @@ namespace DCBotApi.Services.ChannelPrepare
             Console.WriteLine("Updating: " + timer.Elapsed + "ms" + "\n");
         }
 
-        private static void UpdateMessages(IEnumerable<GameObject> games,
+        private static void UpdateMessages(IEnumerable<GiveAway> games,
             DiscordChannel channel,
             List<DiscordMessage> messages,
             PlatformType settings)
@@ -52,13 +52,13 @@ namespace DCBotApi.Services.ChannelPrepare
             //send new games
             foreach (var game in games)
             {
-                if (!messages.Any(x => x.Embeds.FirstOrDefault()?.Title == game.Name))
+                if (!messages.Any(x => x.Embeds.FirstOrDefault()?.Title == game.Title))
                 {
                     //if any platform match with settings it will display
                     bool add = false;
                     if (!settings.HasFlag(PlatformType.All))
                     {
-                        foreach (PlatformType x in game.type)
+                        foreach (PlatformType x in game.GetPlatforms)
                             if (settings.HasFlag(x))
                                 add = true;
                     }
@@ -80,7 +80,7 @@ namespace DCBotApi.Services.ChannelPrepare
             {
                 if (message == messages.Last()) continue;
 
-                if (!games.Any(x => x.Name == message.Embeds.FirstOrDefault()?.Title))
+                if (!games.Any(x => x.Title == message.Embeds.FirstOrDefault()?.Title))
                 {
                     ChannelsUtil.RemoveMessage(message, channel);
                     changes++;
@@ -90,12 +90,12 @@ namespace DCBotApi.Services.ChannelPrepare
             Console.WriteLine("\nchanges: " + changes);
         }
 
-        private static DiscordEmbedBuilder CreateMessage(GameObject game)
+        private static DiscordEmbedBuilder CreateMessage(GiveAway game)
         {
             DiscordEmbedBuilder embedBuilder = new DiscordEmbedBuilder();
-            embedBuilder.ImageUrl = game.ImageURL;
-            embedBuilder.Title = game.Name;
-            embedBuilder.Url = game.RedirectURL;
+            embedBuilder.ImageUrl = game.Image;
+            embedBuilder.Title = game.Title;
+            embedBuilder.Url = game.OpenGiveawayUrl;
             embedBuilder.Build();
             return embedBuilder;
         }

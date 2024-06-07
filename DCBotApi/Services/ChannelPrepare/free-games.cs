@@ -51,8 +51,8 @@ namespace DCBotApi.Services.ChannelPrepare
             message.Content = $"{lang.FGfilltersMessage}\n"
                 + ":one: - PC\n"
                 + ":two: - Steam\n"
-                + ":three: - Epic\n"
-                + ":four: - Xbox one\n";
+                + ":three: - Epic\n";
+                //+ ":four: - Xbox one\n"; //temporarly not used
 
             ChannelsUtil.SendMessage(message, channel);
         }

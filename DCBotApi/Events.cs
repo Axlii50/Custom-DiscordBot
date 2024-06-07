@@ -18,6 +18,8 @@ namespace DCBotApi
         {
             Console.WriteLine("Joined server:" + e.Guild.Name);
 
+            Program._scraper.GetGiveAways();
+
             //get free games channel id and prepare channel
             ulong FreeGamesChannelID = Freegameschannel(e);
 
@@ -52,19 +54,17 @@ namespace DCBotApi
                 ChannelPreparedService.PrepareFreeGamesChannel(newchannel, e.Guild);
             }
 
-            GamerPowerScraper scraped = null;
+           
             if (newchannel == null)
             {
-                scraped = new GamerPowerScraper();
                 //update channel with all scraped data from webpage
-                ChannelUpdateService.UpdateFreeGamesChannel(channel.First().Value, e.Guild, scraped.ExtractedData);
+                ChannelUpdateService.UpdateFreeGamesChannel(channel.First().Value, e.Guild, Program._scraper.GiveAways.GetList);
                 return channel.First().Value.Id;
             }
             else
             {
-                scraped = new GamerPowerScraper();
                 //update channel with all scraped data from webpage
-                ChannelUpdateService.UpdateFreeGamesChannel(newchannel, e.Guild, scraped.ExtractedData);
+                ChannelUpdateService.UpdateFreeGamesChannel(newchannel, e.Guild, Program._scraper.GiveAways.GetList);
                 return newchannel.Id;
             }
         }
@@ -100,9 +100,9 @@ namespace DCBotApi
             }
             Console.WriteLine();
 
-            GamerPowerScraper scraped = new GamerPowerScraper();
+            
             //update channel with data
-            ChannelUpdateService.UpdateFreeGamesChannel(Channel, e.Guild, scraped.ExtractedData);
+            ChannelUpdateService.UpdateFreeGamesChannel(Channel, e.Guild, Program._scraper.GiveAways.GetList);
             return;
         }
     }

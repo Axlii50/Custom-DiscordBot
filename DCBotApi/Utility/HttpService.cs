@@ -72,10 +72,10 @@ namespace DCBotApi.Utility
             using (var client = new HttpClient())
             {
                 // Set Http content type for this request
-                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                // Send the POST request asynchronously and get the response
-                HttpResponseMessage response = await client.PostAsync(fullUrl, null);
+                // Send the GET request asynchronously and get the response
+                HttpResponseMessage response = await client.GetAsync(fullUrl);
 
                 // Check for successful response
                 if (!response.IsSuccessStatusCode)

@@ -16,7 +16,7 @@ namespace DCBotApi
     {
         public static DiscordClient DiscordClient { get; set; }
 
-        public static GamerPowerScraper _scraper { get; set; }
+        public static GamerPowerApi _scraper { get; set; }
 
 #if DEBUG
         const int intervaltime = 20000;
@@ -27,6 +27,9 @@ namespace DCBotApi
 
         static void Main(string[] args)
         {
+            _scraper = new GamerPowerApi();
+            _scraper.GetGiveAways().Wait();
+
             //create folder for configs
             if (!Directory.Exists(DCBotApi.Utility.Directory.GetPath("Configs")))
                 Directory.CreateDirectory(DCBotApi.Utility.Directory.GetPath("Configs"));
@@ -37,6 +40,7 @@ namespace DCBotApi
             {
                 Token = File.ReadAllText("TokenFile.txt"),
                 TokenType = TokenType.Bot,
+                Intents = DiscordIntents.Guilds | DiscordIntents.GuildMessages,
 #if DEBUG
                 //MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug
                 MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error
@@ -60,7 +64,9 @@ namespace DCBotApi
 
         static void Update()
         {
-            var scrapper = new GamerPowerScraper();
+
+            _scraper.GetGiveAways();
+
             foreach (var guild in DiscordClient.Guilds.Values)
             {
 #if DEBUG
@@ -78,7 +84,7 @@ namespace DCBotApi
                         Console.WriteLine("Channel couldnt be found by id: " + channelid);
                         continue;
                     }
-                    ChannelUpdateService.UpdateFreeGamesChannel(channel, guild, scrapper.ExtractedData);
+                    ChannelUpdateService.UpdateFreeGamesChannel(channel, guild, _scraper.GiveAways.GetList);
 
                     ConfigMenager.SetTicks(guild.Id, 0);
                 }

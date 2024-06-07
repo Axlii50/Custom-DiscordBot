@@ -80,7 +80,7 @@ namespace DCBotApi.Configuration
         /// <returns></returns>
         public static ulong GetChannelID(ulong serverId, ChannelEnum channel)
         {
-            if (!Directory.Exists($"Configs\\{serverId}.txt")) return ulong.MinValue;
+            //if (!Directory.Exists($"Configs\\{serverId}.txt")) return ulong.MinValue;
 
             string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
             string configtext = File.ReadAllText(ConfigPath);

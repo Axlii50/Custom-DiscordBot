@@ -19,7 +19,7 @@ namespace DCBotApi.Utility
             string AppFullname = Assembly.GetEntryAssembly().FullName;
             string Appname = AppFullname.Split(',')[0] + ".dll";
             string Path = Assembly.GetEntryAssembly().Location.Replace(Appname, "");
-            return Path + @"\" + PathAdd;
+            return Path + PathAdd;
         }
     }
 }
