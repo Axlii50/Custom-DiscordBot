@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -22,7 +23,6 @@ namespace DCBotApi.Configuration
             PrepareConfigFile(id);
 
             string configjson = JsonConvert.SerializeObject(config, Formatting.Indented);
-
             File.WriteAllText(DCBotApi.Utility.Directory.GetPath($"Configs\\{id}.txt"), configjson);
         }
 
@@ -80,6 +80,8 @@ namespace DCBotApi.Configuration
         /// <returns></returns>
         public static ulong GetChannelID(ulong serverId, ChannelEnum channel)
         {
+            if (!Directory.Exists($"Configs\\{serverId}.txt")) return ulong.MinValue;
+
             string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
             string configtext = File.ReadAllText(ConfigPath);
 
@@ -128,7 +130,6 @@ namespace DCBotApi.Configuration
             return config.CustomNumberOfticks;
         }
 
-
         public static void SetTicks(ulong serverId, int numberofticks)
         {
             string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
@@ -171,6 +172,8 @@ namespace DCBotApi.Configuration
 
         public static Language.LangTypes GetLanguage(ulong serverId)
         {
+            if(!Directory.Exists($"Configs\\{serverId}.txt")) return Language.LangTypes.English;
+
             string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
             string configtext = File.ReadAllText(ConfigPath);
 
