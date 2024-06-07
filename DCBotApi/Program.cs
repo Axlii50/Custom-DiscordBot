@@ -1,4 +1,7 @@
-﻿using DSharpPlus;
+﻿#define Commands
+#define Update
+
+using DSharpPlus;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
@@ -12,6 +15,8 @@ using System.Reflection;
 
 namespace DCBotApi
 {
+
+
     internal class Program
     {
         public static DiscordClient DiscordClient { get; set; }
@@ -49,6 +54,7 @@ namespace DCBotApi
 #endif
             }); ;
 
+#if Update
             var task = Task.Run(async () =>  // <- marked async
             {
                 while (true)
@@ -58,7 +64,7 @@ namespace DCBotApi
                     Update();
                 }
             });
-
+#endif
             MainAsync().GetAwaiter().GetResult();
         }
 
@@ -114,7 +120,9 @@ namespace DCBotApi
                 EnableDefaultHelp = false
             }); ;
 
+#if Commands
             RegisterCommands(commands);
+#endif
 
             await DiscordClient.ConnectAsync();
 
