@@ -38,7 +38,8 @@ namespace DCBotApi
                 Token = File.ReadAllText("TokenFile.txt"),
                 TokenType = TokenType.Bot,
 #if DEBUG
-                MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug
+                //MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug
+                MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error
 #else
                 MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error
 #endif
@@ -83,7 +84,7 @@ namespace DCBotApi
                 }
                 else
                 {
-                    Console.WriteLine($"Ticks update for server: {guild.Name}          to: {++ticks}/{Interval}" +
+                    Console.WriteLine($"Ticks update for server: {guild.Name.PadLeft(32)} to: {++ticks}/{Interval}" +
                         $"\n aproximate time for update: {(Math.Abs(Interval - ticks) * 10)} min");
 
                     ConfigMenager.SetTicks(guild.Id, ticks++);

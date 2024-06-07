@@ -22,6 +22,7 @@ namespace DCBotApi
             ulong FreeGamesChannelID = Freegameschannel(e);
 
             //create config file with server id and channel id 
+            Console.WriteLine("Creating Config File");
             ConfigMenager.CreateConfig(e.Guild.Id, FreeGamesChannelID);
 
             return null;
@@ -79,6 +80,8 @@ namespace DCBotApi
             DiscordChannel Channel = null;
             //retreview channel id saved in config file 
             ulong channelid = ConfigMenager.GetChannelID(e.Guild.Id, ChannelEnum.FGChannel);
+
+            if (channelid == 0) return;
             //check if channel with CHANNELID exist on server
             //if not create new channel with name "free-games"
             //save channel id to config file
