@@ -83,7 +83,16 @@ namespace DCBotApi.Configuration
             //if (!Directory.Exists($"Configs\\{serverId}.txt")) return ulong.MinValue;
 
             string ConfigPath = DCBotApi.Utility.Directory.GetPath($"Configs\\{serverId}.txt");
-            string configtext = File.ReadAllText(ConfigPath);
+            string configtext = "";
+            try
+            {
+                configtext = File.ReadAllText(ConfigPath);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Cant find config file for server: {serverId} \n");
+                return 0;
+            }
 
             Config config = JsonConvert.DeserializeObject<Config>(configtext);
 

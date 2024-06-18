@@ -70,7 +70,6 @@ namespace DCBotApi
 
         static void Update()
         {
-
             _scraper.GetGiveAways();
 
             foreach (var guild in DiscordClient.Guilds.Values)

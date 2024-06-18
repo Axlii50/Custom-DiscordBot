@@ -25,6 +25,7 @@ namespace DCBotApi.Sources.Games
             if (response.status != System.Net.HttpStatusCode.OK) return;
 
             GiveAways = new GiveAways() { GiveAwaysCollection = response.data };
+            Console.WriteLine($"Free games downloaded: {GiveAways.GiveAwaysCollection.Length}");
         }
     }
 }

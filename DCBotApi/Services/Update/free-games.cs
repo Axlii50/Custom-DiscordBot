@@ -20,11 +20,13 @@ namespace DCBotApi.Services.ChannelPrepare
             try
             {
                  messages = channel.GetMessagesAsync().Result;
-            }catch(UnauthorizedAccessException e)
+            }
+            catch(UnauthorizedAccessException e)
             {
                 return;
             };
 
+            //Console.WriteLine($"Ilosc wiadomosci: {messages is null}    {messages?.Count}");
             var settings_message = messages.Last();
 
             PlatformType settings = PlatformType.All;
@@ -79,10 +81,13 @@ namespace DCBotApi.Services.ChannelPrepare
             foreach (var message in messages)
             {
                 if (message == messages.Last()) continue;
-
+                
                 if (!games.Any(x => x.Title == message.Embeds.FirstOrDefault()?.Title))
                 {
-                    ChannelsUtil.RemoveMessage(message, channel);
+                    try
+                    {
+                        ChannelsUtil.RemoveMessage(message, channel);
+                    }catch (Exception e) { }
                     changes++;
                 }
             }

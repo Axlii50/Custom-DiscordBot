@@ -54,6 +54,7 @@ namespace DCBotApi
                 ChannelPreparedService.PrepareFreeGamesChannel(newchannel, e.Guild);
             }
 
+            Thread.Sleep(2000);
            
             if (newchannel == null)
             {
